@@ -1,0 +1,465 @@
+// ============================================
+// MAISON LOUISE - Enhanced JavaScript
+// Suggestions modernes Gen Z
+// ============================================
+
+// Navigation
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+navToggle?.addEventListener('click', () => navMenu.classList.toggle('active'));
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!navToggle?.contains(e.target) && !navMenu?.contains(e.target)) {
+        navMenu?.classList.remove('active');
+    }
+});
+
+// Scroll navbar
+window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ============================================
+// SUGGESTION 1 : Vidéo Hero Responsive (AVEC SON)
+// ============================================
+const heroVideo = document.getElementById('heroVideo');
+if (heroVideo) {
+    // Adapter la taille selon l'écran
+    function resizeVideo() {
+        const videoRatio = 16 / 9;
+        const windowRatio = window.innerWidth / window.innerHeight;
+        
+        if (windowRatio > videoRatio) {
+            heroVideo.style.width = '100vw';
+            heroVideo.style.height = 'auto';
+        } else {
+            heroVideo.style.width = 'auto';
+            heroVideo.style.height = '100vh';
+        }
+    }
+    
+    resizeVideo();
+    window.addEventListener('resize', resizeVideo);
+    
+    // Play après interaction utilisateur si autoplay bloqué
+    heroVideo.play().catch(() => {
+        document.addEventListener('click', () => {
+            heroVideo.play();
+        }, { once: true });
+    });
+}
+
+// ============================================
+// SUGGESTION 2 : Lazy Loading des images
+// ============================================
+const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src || img.src;
+                img.classList.add('loaded');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    lazyImages.forEach(img => imageObserver.observe(img));
+}
+
+// ============================================
+// SUGGESTION 3 : Scroll Animations améliorées
+// ============================================
+const animateOnScroll = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+            animateOnScroll.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.neomorph-card, .section-header').forEach(el => {
+    animateOnScroll.observe(el);
+});
+
+// Stats counter
+const animateCounter = (el) => {
+    const target = +el.dataset.count || +el.textContent;
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            el.textContent = Math.ceil(target);
+            clearInterval(timer);
+        } else {
+            el.textContent = Math.ceil(current);
+        }
+    }, 16);
+};
+
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const numbers = entry.target.querySelectorAll('.stat-number[data-count]');
+            numbers.forEach(animateCounter);
+            statsObserver.unobserve(entry.target);
+        }
+    });
+});
+
+document.querySelectorAll('.hero-stats').forEach(el => statsObserver.observe(el));
+
+// ============================================
+// SUGGESTION 4 : Form validation améliorée
+// ============================================
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    // Validation en temps réel
+    const inputs = contactForm.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+        input.addEventListener('blur', () => validateInput(input));
+        input.addEventListener('input', () => {
+            if (input.classList.contains('error')) {
+                validateInput(input);
+            }
+        });
+    });
+}
+
+function validateInput(input) {
+    const value = input.value.trim();
+    let isValid = true;
+    
+    if (input.required && !value) {
+        isValid = false;
+    } else if (input.type === 'email' && value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        isValid = emailRegex.test(value);
+    } else if (input.type === 'tel' && value) {
+        const phoneRegex = /^[\d\s\+\-\(\)]+$/;
+        isValid = phoneRegex.test(value);
+    }
+    
+    input.classList.toggle('error', !isValid);
+    return isValid;
+}
+
+// Contact Form submission
+contactForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    
+    // Valider tous les champs
+    const inputs = form.querySelectorAll('input, textarea, select');
+    let allValid = true;
+    inputs.forEach(input => {
+        if (!validateInput(input)) allValid = false;
+    });
+    
+    if (!allValid) {
+        showNotification('❌ Veuillez remplir tous les champs correctement', 'error');
+        return;
+    }
+    
+    const btn = form.querySelector('button[type="submit"]');
+    const btnText = btn.innerHTML;
+    
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+    btn.disabled = true;
+    
+    const formData = {
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        event: form.event.value,
+        guests: form.guests.value,
+        date: form.date.value,
+        message: form.message.value
+    };
+    
+    try {
+        // REMPLACER PAR VOTRE API
+        const response = await fetch('https://api.maisonlouise.sn/contact', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        });
+        
+        if (response.ok) {
+            showNotification('✅ Message envoyé ! Nous vous répondrons rapidement.', 'success');
+            form.reset();
+            // Google Analytics event (si configuré)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'form_submit', { event_category: 'contact' });
+            }
+        } else {
+            throw new Error('Erreur serveur');
+        }
+    } catch (error) {
+        // Simulation pour développement
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        showNotification('✅ Message reçu ! (Mode démo)', 'success');
+        form.reset();
+    }
+    
+    btn.innerHTML = btnText;
+    btn.disabled = false;
+});
+
+// ============================================
+// SUGGESTION 5 : Notification system amélioré
+// ============================================
+function showNotification(message, type = 'info') {
+    // Supprimer les anciennes notifications
+    document.querySelectorAll('.notification').forEach(n => n.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 2rem;
+        background: #e0e5ec;
+        padding: 1.5rem 2rem;
+        border-radius: 1rem;
+        box-shadow: 9px 9px 16px rgba(163,177,198,.6), -9px -9px 16px rgba(255,255,255,.5);
+        z-index: 10000;
+        max-width: 400px;
+        font-weight: 600;
+        transform: translateX(400px);
+        transition: transform 0.3s ease-out;
+    `;
+    
+    // Couleur selon le type
+    if (type === 'success') {
+        notification.style.borderLeft = '4px solid #D4AF37';
+    } else if (type === 'error') {
+        notification.style.borderLeft = '4px solid #e74c3c';
+    }
+    
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    // Animation entrée
+    setTimeout(() => notification.style.transform = 'translateX(0)', 10);
+    
+    // Animation sortie
+    setTimeout(() => {
+        notification.style.transform = 'translateX(400px)';
+        setTimeout(() => notification.remove(), 300);
+    }, 5000);
+}
+
+// ============================================
+// SUGGESTION 6 : Smooth scroll amélioré
+// ============================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && href.length > 1) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const offset = 100;
+                const targetPosition = target.offsetTop - offset;
+                window.scrollTo({
+                    top: targetPosition, 
+                    behavior: 'smooth'
+                });
+                navMenu?.classList.remove('active');
+                
+                // Mettre à jour l'URL sans recharger
+                history.pushState(null, null, href);
+            }
+        }
+    });
+});
+
+// ============================================
+// SUGGESTION 7 : Active nav link amélioré
+// ============================================
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+window.addEventListener('scroll', () => {
+    const scrollY = window.pageYOffset;
+    let current = '';
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 150;
+        const sectionHeight = section.offsetHeight;
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+        }
+    });
+});
+
+// ============================================
+// SUGGESTION 8 : Share functionality
+// ============================================
+const shareButtons = document.querySelectorAll('[data-share]');
+shareButtons.forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const shareData = {
+            title: 'MAISON LOUISE - Traiteur Événementiel',
+            text: 'Découvrez MAISON LOUISE, traiteur d\'exception à Dakar',
+            url: window.location.href
+        };
+        
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {
+                console.log('Share cancelled');
+            }
+        } else {
+            // Fallback : copier le lien
+            navigator.clipboard.writeText(window.location.href);
+            showNotification('🔗 Lien copié !', 'success');
+        }
+    });
+});
+
+// ============================================
+// SUGGESTION 9 : Dark mode (optionnel)
+// ============================================
+const darkModeToggle = document.getElementById('darkModeToggle');
+if (darkModeToggle) {
+    const savedMode = localStorage.getItem('darkMode');
+    if (savedMode === 'enabled') {
+        document.body.classList.add('dark-mode');
+    }
+    
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isEnabled = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isEnabled ? 'enabled' : 'disabled');
+    });
+}
+
+// ============================================
+// SUGGESTION 10 : Performance monitoring
+// ============================================
+if ('performance' in window) {
+    window.addEventListener('load', () => {
+        const perfData = performance.timing;
+        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+        console.log(`⚡ Page loaded in ${pageLoadTime}ms`);
+        
+        // Envoyer à Analytics si besoin
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'timing_complete', {
+                name: 'load',
+                value: pageLoadTime,
+                event_category: 'Performance'
+            });
+        }
+    });
+}
+
+// ============================================
+// SUGGESTION 11 : Preload next page
+// ============================================
+const plateauxLinks = document.querySelectorAll('a[href="plateaux.html"]');
+plateauxLinks.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+        const preloadLink = document.createElement('link');
+        preloadLink.rel = 'prefetch';
+        preloadLink.href = 'plateaux.html';
+        document.head.appendChild(preloadLink);
+    }, { once: true });
+});
+
+// ============================================
+// SUGGESTION 12 : Easter egg Gen Z 🎉
+// ============================================
+let konamiCode = [];
+const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
+
+document.addEventListener('keydown', (e) => {
+    konamiCode.push(e.keyCode);
+    konamiCode = konamiCode.slice(-10);
+    
+    if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+        showNotification('🎉 Konami Code activé ! Vous êtes un vrai Gen Z ! 🔥', 'success');
+        document.body.style.animation = 'rainbow 2s infinite';
+    }
+});
+
+// ============================================
+// SUGGESTION 13 : Offline detection
+// ============================================
+window.addEventListener('online', () => {
+    showNotification('✅ Connexion rétablie !', 'success');
+});
+
+window.addEventListener('offline', () => {
+    showNotification('⚠️ Vous êtes hors ligne', 'error');
+});
+
+// ============================================
+// SUGGESTION 14 : Copy email on click
+// ============================================
+const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+emailLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const email = link.textContent;
+        navigator.clipboard.writeText(email);
+        showNotification(`📧 ${email} copié !`, 'success');
+    });
+});
+
+// ============================================
+// SUGGESTION 15 : Scroll to top button
+// ============================================
+const scrollTopBtn = document.createElement('button');
+scrollTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+scrollTopBtn.className = 'scroll-to-top';
+scrollTopBtn.style.cssText = `
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background: var(--gradient);
+    border: none;
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 1000;
+`;
+
+document.body.appendChild(scrollTopBtn);
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 500) {
+        scrollTopBtn.style.opacity = '1';
+        scrollTopBtn.style.visibility = 'visible';
+    } else {
+        scrollTopBtn.style.opacity = '0';
+        scrollTopBtn.style.visibility = 'hidden';
+    }
+});
+
+scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+});
+
+console.log('🍽️ MAISON LOUISE - Site chargé avec succès !');
