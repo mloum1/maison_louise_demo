@@ -13,15 +13,14 @@
         <div class="container">
             <div class="nav-wrapper">
                 <a href="index.html" class="logo">
-                    <span class="logo-emoji">🍽️</span>
-                    <span class="logo-text">MAISON <span class="accent">LOUISE</span></span>
+                    <span class="logo-text">MAISON LOUISE</span></span>
                 </a>
                 <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="#accueil" class="nav-link active">Accueil</a></li>
                     <li><a href="#services" class="nav-link">Services</a></li>
                     <li><a href="plateaux.html" class="nav-link">Plateaux</a></li>
-                    <li><a href="#instagram" class="nav-link">Instagram</a></li>
+                    <li><a href="#avis" class="nav-link">Avis</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                     <li><a href="plateaux.html" class="btn-neomorph btn-primary">Commander 🛒</a></li>
                 </ul>
@@ -30,49 +29,53 @@
     </nav>
 
     <section class="hero" id="accueil">
-        <div class="hero-video-bg">
-            <video autoplay muted loop playsinline class="hero-video" id="heroVideo">
-                <source src="videos/presentation.mp4" type="video/mp4">
-                <source src="videos/presentation.webm" type="video/webm">
-            </video>
-            <div class="hero-overlay"></div>
+        <div class="hero-slideshow">
+          <div class="slide active">
+            <img src="images/cocktail.jpeg" alt="Événement MAISON LOUISE">
+          </div>
+          <div class="slide">
+            <img src="images/mariage.jpg" alt="Table élégante MAISON LOUISE">
+          </div>
+          <div class="slide">
+            <img src="images/prive.jpg" alt="Buffet MAISON LOUISE">
+          </div>
+          <div class="slide">
+            <img src="images/professionnel.jpg" alt="Cocktail MAISON LOUISE">
+          </div>
+        </div>
+        <div class="slideshow-dots">
+          <span class="dot active" data-slide="0"></span>
+          <span class="dot" data-slide="1"></span>
+          <span class="dot" data-slide="2"></span>
+          <span class="dot" data-slide="3"></span>
         </div>
         <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge neomorph-card animate-float">
-                    <span>✨ Traiteur d'Exception à Dakar et Lyon</span>
-                </div>
-                <h1 class="hero-title">MAISON LOUISE</h1>
-                <p class="hero-tagline">Une Maison • Une Vision • Une Expérience</p>
-                <p class="hero-description">Des expériences culinaires uniques qui créent des souvenirs éternels ✨</p>
-                <div class="hero-buttons">
-                    <a href="plateaux.html" class="btn-neomorph btn-primary btn-large">
-                        <i class="fas fa-utensils"></i> Nos Plateaux
-                    </a>
-                    <a href="#contact" class="btn-neomorph btn-secondary btn-large">
-                        <i class="fas fa-calendar-alt"></i> Réserver
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-card neomorph-card">
-                        <div class="stat-icon">🎊</div>
-                        <div class="stat-number" data-count="500">0</div>
-                        <div class="stat-label">Fêtes</div>
-                    </div>
-                    <div class="stat-card neomorph-card">
-                        <div class="stat-icon">🌟</div>
-                        <div class="stat-number">4.9</div>
-                        <div class="stat-label">Top Notes</div>
-                    </div>
-                    <div class="stat-card neomorph-card">
-                        <div class="stat-icon">🎉</div>
-                        <div class="stat-number" data-count="1200">0</div>
-                        <div class="stat-label">Waouh!</div>
-                    </div>
-                </div>
+          <div class="hero-content">
+            <div class="hero-badge neomorph-card animate-float">
+              <span>✨ Traiteur d'Exception au Sénégal</span>
             </div>
+            <div class="hero-logo">
+              <h1 class="hero-brand">MAISON LOUISE</h1>
+            </div>
+            <p class="hero-services">
+              Traiteur événementiel sur mesure • Bar mobile • Jeux de cartes (Poker & Black Jack)
+            </p>
+            <p class="hero-tagline">Une Maison • Une Vision • Une Signature</p>
+
+            <p class="hero-description">
+              Des expériences culinaires uniques qui créent des souvenirs éternels ✨
+            </p>
+            <div class="hero-buttons">
+              <a href="plateaux.html" class="btn-neomorph btn-primary btn-large">
+                <i class="fas fa-utensils"></i> Nos Plateaux
+              </a>
+              <a href="#contact" class="btn-neomorph btn-secondary btn-large">
+                <i class="fas fa-phone"></i> Demander un devis
+              </a>
+            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
     <section class="section about-section" id="about">
       <div class="container">
@@ -101,20 +104,6 @@
               <p class="highlight">Une approche où rien n'est standard. Où chaque prestation est pensée comme une partie unique.</p>
             </div>
           </div>
-
-          <div class="about-image">
-            <img src="images/chef.webp" alt="Chef préparant un plat" class="neomorph-card">
-            <div class="about-values">
-              <div class="value-badge neomorph-card">
-                <div class="value-icon">👨‍🍳</div>
-                <h4>Préparé par nos<br>Chefs Cuisiniers</h4>
-              </div>
-              <div class="value-badge neomorph-card">
-                <div class="value-icon">✨</div>
-                <h4>Fabriqué avec les<br>Meilleurs Ingrédients</h4>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -123,7 +112,6 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-badge neomorph-badge">💫 Nos Services</span>
-                <h2 class="section-title">Ce Qu'On Fait De <span class="gradient-text">Mieux</span></h2>
             </div>
             <div class="services-grid">
                 <div class="service-card neomorph-card">

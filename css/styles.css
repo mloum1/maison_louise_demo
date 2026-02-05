@@ -1892,3 +1892,297 @@ a {
 .prestation-card:nth-child(1) { animation-delay: 0.1s; }
 .prestation-card:nth-child(2) { animation-delay: 0.2s; }
 .prestation-card:nth-child(3) { animation-delay: 0.3s; }
+
+.hero-slideshow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transform: scale(1);
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.4) 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+.slideshow-dots {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 10;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.dot:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: scale(1.2);
+}
+
+.dot.active {
+    background: #D4AF37;
+    border-color: white;
+    width: 32px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.5);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.95);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: #1a2947;
+    backdrop-filter: blur(10px);
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(212, 175, 55, 0.5);
+    animation: fadeInDown 1s ease-out backwards;
+}
+
+.hero-logo {
+    margin: 2rem 0;
+}
+
+.hero-brand {
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    letter-spacing: 8px;
+    color: #ffffff;
+    text-shadow:
+        0 2px 4px rgba(0,0,0,0.9),
+        0 4px 8px rgba(0,0,0,0.7),
+        0 8px 16px rgba(0,0,0,0.5),
+        0 0 40px rgba(212,175,55,0.6),
+        0 0 80px rgba(212,175,55,0.3);
+    margin: 0;
+    line-height: 1.1;
+    animation: fadeInScale 1.2s ease-out;
+    /* Contour blanc subtil pour encore plus de contraste */
+    -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.hero-services {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    text-shadow:
+        0 2px 4px rgba(0,0,0,0.9),
+        0 4px 8px rgba(0,0,0,0.7),
+        0 0 20px rgba(0,0,0,0.5);
+    animation: fadeInUp 1s ease-out 0.2s backwards;
+    background: rgba(26, 41, 71, 0.4);
+    padding: 0.5rem 1.5rem;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    display: inline-block;
+}
+
+.hero-tagline {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow:
+        0 2px 4px rgba(0,0,0,0.9),
+        0 4px 8px rgba(0,0,0,0.6);
+    animation: fadeInUp 1s ease-out 0.4s backwards;
+}
+
+.hero-description {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    margin-bottom: 3rem;
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow:
+        0 2px 4px rgba(0,0,0,0.9),
+        0 4px 8px rgba(0,0,0,0.6);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+    animation: fadeInUp 1s ease-out 0.6s backwards;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease-out 0.8s backwards;
+}
+
+.hero-buttons .btn-neomorph {
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.4),
+        var(--shadow);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+    .hero-brand {
+        font-size: 3rem;
+        letter-spacing: 4px;
+        -webkit-text-stroke: 0.5px rgba(255,255,255,0.3);
+    }
+
+    .hero-services {
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .hero-tagline {
+        font-size: 1.1rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+    }
+
+    .hero-badge {
+        font-size: 0.8rem;
+        padding: 0.6rem 1.5rem;
+    }
+
+    .slideshow-dots {
+        bottom: 2rem;
+        gap: 0.75rem;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .dot.active {
+        width: 24px;
+    }
+
+    .hero-buttons {
+        flex-direction: row;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0 0.5rem;
+    }
+
+    .hero-buttons .btn-neomorph {
+        flex: 1;
+        min-width: 0;
+        padding: 0.875rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-brand {
+        font-size: 2.5rem;
+        letter-spacing: 3px;
+    }
+
+    .hero-services {
+        font-size: 0.85rem;
+    }
+
+    .hero-buttons {
+        gap: 0.5rem;
+    }
+
+    .hero-buttons .btn-neomorph {
+        padding: 0.75rem 0.75rem;
+        font-size: 0.8rem;
+    }
+}

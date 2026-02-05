@@ -480,3 +480,90 @@ window.addEventListener('scroll', () => {
 scrollTopBtn.addEventListener('click', () => {
   window.scrollTo({top: 0, behavior: 'smooth'});
 });
+
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+let currentSlide = 0;
+let slideInterval;
+
+function showSlide(index) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+
+    if (index >= slides.length) {
+        currentSlide = 0;
+    } else if (index < 0) {
+        currentSlide = slides.length - 1;
+    } else {
+        currentSlide = index;
+    }
+
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+}
+
+function nextSlide() {
+    showSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+    showSlide(currentSlide - 1);
+}
+
+function startSlideshow() {
+    slideInterval = setInterval(nextSlide, 5000);
+}
+
+function stopSlideshow() {
+    clearInterval(slideInterval);
+}
+
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        showSlide(index);
+        stopSlideshow();
+        startSlideshow();
+    });
+
+const heroSection = document.querySelector('.hero');
+if (heroSection) {
+    heroSection.addEventListener('mouseenter', stopSlideshow);
+    heroSection.addEventListener('mouseleave', startSlideshow);
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+        prevSlide();
+        stopSlideshow();
+        startSlideshow();
+    } else if (e.key === 'ArrowRight') {
+        nextSlide();
+        stopSlideshow();
+        startSlideshow();
+    }
+});
+
+if (slides.length > 0) {
+    showSlide(0);
+    startSlideshow();
+}
+
+// Pause slideshow quand l'onglet n'est pas visible (optimisation)
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        stopSlideshow();
+    } else {
+        startSlideshow();
+    }
+});
+
+function preloadSlideImages() {
+    slides.forEach(slide => {
+        const img = slide.querySelector('img');
+        if (img && img.dataset.src) {
+            img.src = img.dataset.src;
+        }
+    });
+}
+
+window.addEventListener('load', preloadSlideImages);
