@@ -301,9 +301,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// ============================================
-// SUGGESTION 7 : Active nav link amélioré
-// ============================================
+
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-link');
 
@@ -327,9 +325,6 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// ============================================
-// Share functionality
-// ============================================
 const shareButtons = document.querySelectorAll('[data-share]');
 shareButtons.forEach(btn => {
   btn.addEventListener('click', async () => {
@@ -352,33 +347,12 @@ shareButtons.forEach(btn => {
   });
 });
 
-// ============================================
-// Dark mode
-// ============================================
-const darkModeToggle = document.getElementById('darkModeToggle');
-if (darkModeToggle) {
-  const savedMode = localStorage.getItem('darkMode');
-  if (savedMode === 'enabled') {
-    document.body.classList.add('dark-mode');
-  }
-
-  darkModeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isEnabled = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isEnabled ? 'enabled' : 'disabled');
-  });
-}
-
-// ============================================
-// Performance monitoring
-// ============================================
 if ('performance' in window) {
   window.addEventListener('load', () => {
     const perfData = performance.timing;
     const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
     console.log(`⚡ Page loaded in ${pageLoadTime}ms`);
 
-    // Envoyer à Analytics si besoin
     if (typeof gtag !== 'undefined') {
       gtag('event', 'timing_complete', {
         name: 'load',
@@ -389,9 +363,6 @@ if ('performance' in window) {
   });
 }
 
-// ============================================
-// Preload next page
-// ============================================
 const plateauxLinks = document.querySelectorAll('a[href="plateaux.html"]');
 plateauxLinks.forEach(link => {
   link.addEventListener('mouseenter', () => {
@@ -402,9 +373,6 @@ plateauxLinks.forEach(link => {
   }, { once: true });
 });
 
-// ============================================
-// Easter egg Gen Z 🎉
-// ============================================
 let konamiCode = [];
 const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
 
@@ -418,9 +386,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ============================================
-// Offline detection
-// ============================================
 window.addEventListener('online', () => {
   showNotification('✅ Connexion rétablie !', 'success');
 });
@@ -429,9 +394,6 @@ window.addEventListener('offline', () => {
   showNotification('⚠️ Vous êtes hors ligne', 'error');
 });
 
-// ============================================
-// SCopy email on click
-// ============================================
 const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
 emailLinks.forEach(link => {
   link.addEventListener('click', (e) => {
@@ -442,9 +404,6 @@ emailLinks.forEach(link => {
   });
 });
 
-// ============================================
-// Scroll to top button
-// ============================================
 const scrollTopBtn = document.createElement('button');
 scrollTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
 scrollTopBtn.className = 'scroll-to-top';
@@ -481,15 +440,19 @@ scrollTopBtn.addEventListener('click', () => {
   window.scrollTo({top: 0, behavior: 'smooth'});
 });
 
+// ===== SLIDESHOW HERO =====
 const slides = document.querySelectorAll('.slide');
 const dots = document.querySelectorAll('.dot');
 let currentSlide = 0;
 let slideInterval;
 
+// Fonction pour changer de slide
 function showSlide(index) {
+    // Retirer active de tous
     slides.forEach(slide => slide.classList.remove('active'));
     dots.forEach(dot => dot.classList.remove('active'));
 
+    // Boucler si nécessaire
     if (index >= slides.length) {
         currentSlide = 0;
     } else if (index < 0) {
@@ -498,39 +461,48 @@ function showSlide(index) {
         currentSlide = index;
     }
 
+    // Activer le slide et dot actuel
     slides[currentSlide].classList.add('active');
     dots[currentSlide].classList.add('active');
 }
 
+// Fonction pour slide suivant
 function nextSlide() {
     showSlide(currentSlide + 1);
 }
 
+// Fonction pour slide précédent
 function prevSlide() {
     showSlide(currentSlide - 1);
 }
 
+// Auto-play slideshow
 function startSlideshow() {
-    slideInterval = setInterval(nextSlide, 5000);
+    slideInterval = setInterval(nextSlide, 5000); // Change toutes les 5 secondes
 }
 
 function stopSlideshow() {
     clearInterval(slideInterval);
 }
 
+// Click sur dots pour navigation manuelle
 dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
         showSlide(index);
+        // Restart l'auto-play après click manuel
         stopSlideshow();
         startSlideshow();
     });
+}); // ✅ ACCOLADE FERMANTE AJOUTÉE ICI !
 
+// Pause au hover du hero
 const heroSection = document.querySelector('.hero');
 if (heroSection) {
     heroSection.addEventListener('mouseenter', stopSlideshow);
     heroSection.addEventListener('mouseleave', startSlideshow);
 }
 
+// Navigation clavier (optionnel)
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
         prevSlide();
@@ -556,14 +528,3 @@ document.addEventListener('visibilitychange', () => {
         startSlideshow();
     }
 });
-
-function preloadSlideImages() {
-    slides.forEach(slide => {
-        const img = slide.querySelector('img');
-        if (img && img.dataset.src) {
-            img.src = img.dataset.src;
-        }
-    });
-}
-
-window.addEventListener('load', preloadSlideImages);
