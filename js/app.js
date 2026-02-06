@@ -528,3 +528,196 @@ document.addEventListener('visibilitychange', () => {
         startSlideshow();
     }
 });
+
+
+const filterButtons = document.querySelectorAll('.filter-btn');
+const avisCards = document.querySelectorAll('.avis-card');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const filter = button.dataset.filter;
+
+        avisCards.forEach(card => {
+            if (filter === 'tous') {
+                card.style.display = 'block';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 10);
+            } else {
+                if (card.dataset.category === filter) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 10);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            }
+        });
+    });
+});
+
+const helpfulButtons = document.querySelectorAll('.btn-helpful');
+
+helpfulButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const text = button.textContent;
+        const match = text.match(/\d+/);
+
+        if (match) {
+            const currentCount = parseInt(match[0]);
+            const newCount = currentCount + 1;
+            button.textContent = `👍 Utile (${newCount})`;
+
+            button.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 200);
+
+            button.disabled = true;
+            button.style.opacity = '0.7';
+        }
+    });
+});
+
+const loadMoreBtn = document.getElementById('loadMoreBtn');
+let visibleCount = 6;
+
+if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', () => {
+        showNotification('✅ Tous les avis sont affichés !', 'success');
+        loadMoreBtn.style.display = 'none';
+    });
+}
+
+const avisForm = document.getElementById('avisForm');
+const avisComment = document.getElementById('avis-comment');
+const charCount = document.querySelector('.char-count');
+
+if (avisComment && charCount) {
+    avisComment.addEventListener('input', () => {
+        const length = avisComment.value.length;
+        charCount.textContent = `${length} / 500 caractères`;
+
+        if (length > 450) {
+            charCount.style.color = '#e74c3c';
+        } else {
+            charCount.style.color = 'var(--text-light)';
+        }
+    });
+}
+
+if (avisForm) {
+    avisForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = {
+            name: form.name.value,
+            eventType: form.eventType.value,
+            rating: form.rating.value,
+            comment: form.comment.value
+        };
+
+        if (!formData.rating) {
+            showNotification('⭐ Veuillez sélectionner une note', 'error');
+            return;
+        }
+
+        if (formData.comment.length < 50) {
+            showNotification('📝 Votre avis doit contenir au moins 50 caractères', 'error');
+            return;
+        }
+
+        const btn = form.querySelector('button[type="submit"]');
+        const btnText = btn.innerHTML;
+
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publication...';
+        btn.disabled = true;
+
+        try {
+            // REMPLACER PAR VOTRE API
+            // const response = await fetch('https://api.maisonlouise.sn/avis', {
+            //     method: 'POST',
+            //     headers: {'Content-Type': 'application/json'},
+            //     body: JSON.stringify(formData)
+            // });
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            const newAvisCard = createAvisCard(formData);
+            const avisGrid = document.querySelector('.avis-grid');
+            avisGrid.insertBefore(newAvisCard, avisGrid.firstChild);
+
+            setTimeout(() => {
+                newAvisCard.style.opacity = '1';
+                newAvisCard.style.transform = 'translateY(0)';
+            }, 10);
+
+            showNotification('✅ Merci pour votre avis ! Il sera publié après modération.', 'success');
+            form.reset();
+            charCount.textContent = '0 / 500 caractères';
+
+            newAvisCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        } catch (error) {
+            showNotification('❌ Erreur lors de l\'envoi. Veuillez réessayer.', 'error');
+        }
+
+        btn.innerHTML = btnText;
+        btn.disabled = false;
+    });
+}
+
+function createAvisCard(data) {
+    const card = document.createElement('div');
+    card.className = 'avis-card neomorph-card';
+    card.dataset.category = data.eventType;
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(-20px)';
+    card.style.transition = 'all 0.5s';
+
+    const emojiMap = {
+        'mariage': '💍',
+        'corporate': '💼',
+        'prive': '🎉'
+    };
+
+    const labelMap = {
+        'mariage': '💍 Mariage',
+        'corporate': '💼 Corporate',
+        'prive': '🎉 Privé'
+    };
+
+    const stars = '⭐'.repeat(parseInt(data.rating));
+
+    card.innerHTML = `
+        <div class="avis-header">
+            <div class="avis-avatar">${emojiMap[data.eventType]}</div>
+            <div class="avis-info">
+                <h4 class="avis-name">${data.name}</h4>
+                <div class="avis-meta">
+                    <span class="avis-event">${labelMap[data.eventType]}</span>
+                    <span class="avis-date">À l'instant</span>
+                </div>
+            </div>
+            <div class="avis-rating">
+                <div class="stars">${stars}</div>
+            </div>
+        </div>
+        <p class="avis-text">${data.comment}</p>
+        <div class="avis-helpful">
+            <button class="btn-helpful">👍 Utile (0)</button>
+        </div>
+    `;
+
+    return card;
+}
