@@ -1,295 +1,531 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Signature Premium | MAISON LOUISE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-        .detail-hero{padding-top:120px;padding-bottom:4rem}.detail-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:start}.plateau-detail-image{position:relative;border-radius:2rem;overflow:hidden;box-shadow:var(--shadow)}.plateau-detail-image img{width:100%;height:500px;object-fit:cover}.detail-actions{display:flex;gap:1rem;margin-top:2rem}.like-btn{display:flex;align-items:center;gap:0.75rem;padding:1rem 2rem;background:var(--bg);border-radius:3rem;box-shadow:var(--shadow);border:none;cursor:pointer;font-size:1.1rem;font-weight:600;transition:.3s}.like-btn:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}.like-btn.liked{background:var(--gradient);color:var(--navy)}.like-btn.liked i{animation:heartBeat 0.5s}.detail-info{position:sticky;top:120px}.detail-rating{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}.rating-stars{font-size:1.5rem;color:var(--gold)}.rating-score{font-size:2.5rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.rating-count{color:var(--text-light);font-size:1.1rem}.detail-title{font-size:2.5rem;margin-bottom:1rem}.detail-description{font-size:1.125rem;color:var(--text-light);margin-bottom:2rem;line-height:1.7}.detail-features{list-style:none;margin-bottom:2rem}.detail-features li{display:flex;align-items:center;gap:1rem;padding:1rem;margin-bottom:0.75rem;background:var(--bg);border-radius:1rem;box-shadow:var(--shadow);font-weight:600}.detail-features i{font-size:1.5rem;color:var(--gold)}.price-card{background:var(--bg);border-radius:2rem;padding:3rem;box-shadow:var(--shadow);text-align:center;margin-top:2rem}.price-card .price{font-size:3.5rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}.price-card .price-label{color:var(--text-light);margin-bottom:2rem}.reviews-section{margin-top:6rem}.reviews-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:3rem}.review-form{background:var(--bg);padding:3rem;border-radius:2rem;box-shadow:var(--shadow);margin-bottom:4rem}.review-form h3{margin-bottom:2rem}.star-rating{display:flex;gap:0.5rem;margin-bottom:1.5rem}.star-rating input{display:none}.star-rating label{font-size:2.5rem;color:#ddd;cursor:pointer;transition:.2s}.star-rating label:hover,.star-rating label:hover~label,.star-rating input:checked~label{color:var(--gold)}.reviews-list{display:grid;gap:2rem}.review-card{background:var(--bg);padding:2.5rem;border-radius:2rem;box-shadow:var(--shadow)}.review-header{display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem}.review-avatar{width:60px;height:60px;background:var(--gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.75rem;font-weight:800;color:var(--navy)}.review-author{flex:1}.review-name{font-size:1.25rem;font-weight:700;margin-bottom:0.25rem}.review-date{color:var(--text-light);font-size:0.9rem}.review-stars{color:var(--gold);font-size:1.25rem;margin-bottom:1rem}.review-text{line-height:1.7;color:var(--text)}@keyframes heartBeat{0%,100%{transform:scale(1)}25%{transform:scale(1.3)}50%{transform:scale(1.1)}}@media (max-width:968px){.detail-grid{grid-template-columns:1fr}.detail-info{position:static}.plateau-detail-image img{height:350px}}@media (max-width:480px){.detail-hero{padding-top:100px;padding-bottom:2rem}.plateau-detail-image img{height:250px}.detail-title{font-size:1.75rem}.detail-description{font-size:1rem}.detail-features li{padding:0.75rem;font-size:0.9rem}.detail-features i{font-size:1.25rem}.price-card{padding:2rem}.price-card .price{font-size:2.5rem}.review-form{padding:2rem}.review-card{padding:1.5rem}.review-avatar{width:50px;height:50px;font-size:1.5rem}.star-rating label{font-size:2rem}.like-btn{padding:0.875rem 1.5rem;font-size:0.95rem}.detail-actions{flex-direction:column;gap:0.75rem}.detail-actions button{width:100%;justify-content:center}}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plateaux Repas | MAISON LOUISE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .detail-hero{padding-top:120px;padding-bottom:4rem}.detail-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:start}.plateau-detail-image{position:relative;border-radius:2rem;overflow:hidden;box-shadow:var(--shadow)}.plateau-detail-image img{width:100%;height:500px;object-fit:cover}.detail-actions{display:flex;gap:1rem;margin-top:2rem}.like-btn{display:flex;align-items:center;gap:0.75rem;padding:1rem 2rem;background:var(--bg);border-radius:3rem;box-shadow:var(--shadow);border:none;cursor:pointer;font-size:1.1rem;font-weight:600;transition:.3s;font-family:'Poppins',sans-serif}.like-btn:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}.like-btn.liked{background:var(--gradient);color:var(--navy)}.like-btn.liked i{animation:heartBeat 0.5s}.detail-info{position:sticky;top:120px}.detail-title{font-size:2.5rem;margin-bottom:1rem;font-family:'Playfair Display',serif}.detail-description{font-size:1.125rem;color:var(--text-light);margin-bottom:2rem;line-height:1.7}
+    .days-selector{display:flex;flex-direction:column;gap:0.75rem;margin:2rem 0}.day-btn{padding:1.25rem 1.5rem;background:var(--bg);border:2px solid transparent;border-radius:1rem;box-shadow:var(--shadow);cursor:pointer;font-weight:700;font-size:1.05rem;transition:all 0.3s;text-align:left;font-family:'Poppins',sans-serif;color:var(--navy)}.day-btn:hover{box-shadow:var(--shadow-hover);transform:translateX(5px)}.day-btn.active{background:var(--gradient);color:var(--navy);border-color:var(--gold)}
+    .menu-details{background:var(--bg);padding:2rem;border-radius:2rem;box-shadow:var(--shadow);margin-bottom:2rem;display:none}.menu-details.active{display:block;animation:fadeIn 0.3s}.menu-section{margin-bottom:1.5rem}.menu-section:last-child{margin-bottom:0}.menu-section h4{font-size:1.25rem;color:var(--navy);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;font-family:'Playfair Display',serif}.menu-section h4 i{color:var(--gold)}.menu-item{padding:1rem;background:rgba(212,175,55,0.1);border-radius:1rem;margin-bottom:0.5rem}.menu-item-name{font-weight:700;margin-bottom:0.25rem;color:var(--navy)}.menu-item-desc{font-size:0.9rem;color:var(--text-light)}
+    .allergens-section{margin-top:1rem;padding:1rem;background:rgba(231,76,60,0.1);border-left:4px solid #e74c3c;border-radius:0.5rem}.allergens-title{font-size:0.95rem;font-weight:700;color:#e74c3c;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem}.allergens-list{font-size:0.85rem;color:var(--text)}
+    .order-section{background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);padding:2.5rem;border-radius:2rem;box-shadow:0 10px 30px rgba(0,0,0,0.15);border:1px solid rgba(255,255,255,0.5)}.order-header{text-align:center;margin-bottom:2rem}.order-header h3{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--navy);margin-bottom:0.5rem}.order-selected-day{font-size:1.1rem;color:var(--text-light);font-weight:600}
+    .quantity-group{margin-bottom:2rem}.quantity-label{display:block;font-weight:700;margin-bottom:1rem;color:var(--navy);font-size:1.05rem}.quantity-selector{display:flex;align-items:center;justify-content:center;gap:1rem}.quantity-btn{width:50px;height:50px;background:var(--bg);border:none;border-radius:50%;box-shadow:var(--shadow);cursor:pointer;font-size:1.5rem;font-weight:700;transition:all 0.3s;color:var(--navy)}.quantity-btn:hover{box-shadow:var(--shadow-hover);transform:scale(1.1)}.quantity-display{font-size:2rem;font-weight:800;min-width:60px;text-align:center;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .date-group{margin-bottom:2rem}.date-label{display:block;font-weight:700;margin-bottom:0.75rem;color:var(--navy);font-size:1.05rem}.date-input{width:100%;padding:1rem;background:var(--bg);border:2px solid transparent;border-radius:1rem;box-shadow:var(--shadow);font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;color:var(--navy);transition:all 0.3s}.date-input:focus{outline:none;border-color:var(--gold);box-shadow:var(--shadow-hover)}
+    .price-summary{text-align:center;padding:1.5rem;background:rgba(255,255,255,0.5);border-radius:1rem;margin-bottom:2rem}.price-label{font-size:1rem;color:var(--text-light);margin-bottom:0.5rem}.price-total{font-size:2.5rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+    @keyframes heartBeat{0%,100%{transform:scale(1)}25%{transform:scale(1.3)}50%{transform:scale(1.1)}}
+    @keyframes fadeIn{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+
+    @media (max-width:968px){.detail-grid{grid-template-columns:1fr}.detail-info{position:static}.plateau-detail-image img{height:350px}}
+
+    @media (max-width:480px){.detail-hero{padding-top:100px;padding-bottom:2rem}.plateau-detail-image img{height:250px}.detail-title{font-size:1.75rem}.detail-description{font-size:1rem}.like-btn{padding:0.875rem 1.5rem;font-size:0.95rem}.detail-actions{flex-direction:column;gap:0.75rem}.detail-actions button{width:100%;justify-content:center}.day-btn{padding:1rem;font-size:0.95rem}.order-section{padding:1.5rem}.quantity-btn{width:45px;height:45px;font-size:1.25rem}.quantity-display{font-size:1.75rem}.price-total{font-size:2rem}}
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-wrapper">
-                <a href="index.html" class="logo">
-                    <span class="logo-emoji">🍽️</span>
-                    <span class="logo-text">MAISON <span class="accent">LOUISE</span></span>
-                </a>
-                <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html" class="nav-link">Accueil</a></li>
-                    <li><a href="plateaux.html" class="nav-link">Plateaux</a></li>
-                    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
-                </ul>
-            </div>
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-wrapper">
+      <a href="index.html" class="logo">
+        <span class="logo-text">MAISON LOUISE</span>
+      </a>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" class="nav-link">Accueil</a></li>
+        <li><a href="plateaux.html" class="nav-link">Plateaux</a></li>
+        <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="detail-hero">
+  <div class="container">
+    <div class="detail-grid">
+      <div>
+        <div class="plateau-detail-image neomorph-card">
+          <img src="images/instagram-post-1.webp" alt="Plateaux Repas" id="plateauImage">
         </div>
-    </nav>
-
-    <section class="detail-hero">
-        <div class="container">
-            <div class="detail-grid">
-                <div>
-                    <div class="plateau-detail-image neomorph-card">
-                        <img src="images/instagram-post-1.webp" alt="Menu Signature Premium" id="plateauImage">
-                    </div>
-                    <div class="detail-actions">
-                        <button class="like-btn" id="likeBtn">
-                            <i class="fas fa-heart"></i>
-                            <span id="likeCount">127</span> J'aime
-                        </button>
-                        <button class="btn-neomorph" onclick="navigator.share && navigator.share({title:'Menu Signature', url:window.location.href})">
-                            <i class="fas fa-share-alt"></i> Partager
-                        </button>
-                    </div>
-                </div>
-
-                <div class="detail-info">
-                    <div class="detail-rating">
-                        <div class="rating-stars">⭐⭐⭐⭐⭐</div>
-                        <div>
-                            <div class="rating-score" id="avgRating">4.9</div>
-                            <div class="rating-count"><span id="reviewCount">23</span> avis</div>
-                        </div>
-                    </div>
-
-                    <h1 class="detail-title" id="plateauTitle">Menu Signature Premium</h1>
-                    <p class="detail-description" id="plateauDescription">
-                        Notre création gastronomique d'exception, parfaite pour les mariages et événements prestigieux.
-                        Un menu en 5 services qui marie tradition et modernité.
-                    </p>
-
-                    <ul class="detail-features">
-                        <li><i class="fas fa-utensils"></i> Menu 5 services gastronomiques</li>
-                        <li><i class="fas fa-wine-glass"></i> Accord mets et vins inclus</li>
-                        <li><i class="fas fa-leaf"></i> Produits frais et locaux</li>
-                        <li><i class="fas fa-users"></i> Service complet professionnel</li>
-                        <li><i class="fas fa-star"></i> Présentation raffinée</li>
-                    </ul>
-
-                    <div class="price-card">
-                        <div class="price" id="plateauPrice">45€</div>
-                        <div class="price-label">par personne (minimum 20 personnes)</div>
-                        <a href="index.html#contact" class="btn-neomorph btn-primary btn-large full-width">
-                            <i class="fas fa-calendar-check"></i> Réserver ce menu
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="detail-actions">
+          <button class="like-btn" id="likeBtn">
+            <i class="fas fa-heart"></i>
+            <span id="likeCount">127</span> J'aime
+          </button>
+          <button class="btn-neomorph" id="shareBtn">
+            <i class="fas fa-share-alt"></i> Partager
+          </button>
         </div>
-    </section>
+      </div>
 
-    <section class="reviews-section">
-        <div class="container">
-            <div class="reviews-header">
-                <h2 class="section-title">Avis Clients</h2>
-            </div>
+      <div class="detail-info">
+        <h1 class="detail-title">Plateaux Repas de la Semaine</h1>
+        <p class="detail-description">
+          Découvrez nos menus changeants chaque jour de la semaine. Des plats fraîchement préparés avec des produits locaux et de saison.
+        </p>
 
-            <!-- Formulaire d'avis -->
-            <form class="review-form" id="reviewForm">
-                <h3>Donnez votre avis ✍️</h3>
-                <p style="color:var(--text-light);margin-bottom:2rem">Partagez votre expérience avec MAISON LOUISE</p>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Votre nom *</label>
-                        <input type="text" name="name" class="neomorph-input" required maxlength="50">
-                    </div>
-                    <div class="form-group">
-                        <label>Votre email * (non affiché)</label>
-                        <input type="email" name="email" class="neomorph-input" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Votre note *</label>
-                    <div class="star-rating" id="starRating">
-                        <input type="radio" name="rating" id="star5" value="5" required>
-                        <label for="star5">⭐</label>
-                        <input type="radio" name="rating" id="star4" value="4">
-                        <label for="star4">⭐</label>
-                        <input type="radio" name="rating" id="star3" value="3">
-                        <label for="star3">⭐</label>
-                        <input type="radio" name="rating" id="star2" value="2">
-                        <label for="star2">⭐</label>
-                        <input type="radio" name="rating" id="star1" value="1">
-                        <label for="star1">⭐</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Votre commentaire * (20-500 caractères)</label>
-                    <textarea name="comment" rows="4" class="neomorph-input" required minlength="20" maxlength="500" placeholder="Parlez-nous de votre expérience..."></textarea>
-                </div>
-
-                <button type="submit" class="btn-neomorph btn-primary btn-large full-width">
-                    <i class="fas fa-paper-plane"></i> Publier mon avis
-                </button>
-                <p style="font-size:0.85rem;color:var(--text-light);margin-top:1rem;text-align:center">
-                    Votre avis sera vérifié avant publication
-                </p>
-            </form>
-
-            <!-- Liste des avis -->
-            <div class="reviews-list" id="reviewsList">
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-avatar">A</div>
-                        <div class="review-author">
-                            <div class="review-name">Aminata D.</div>
-                            <div class="review-date">Il y a 2 semaines</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">
-                        Absolument parfait pour notre mariage ! MAISON LOUISE a su créer une expérience culinaire exceptionnelle.
-                        Les invités en parlent encore. Service impeccable, présentation magnifique. Je recommande à 100% ! 🌟
-                    </p>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-avatar">M</div>
-                        <div class="review-author">
-                            <div class="review-name">Mohamed K.</div>
-                            <div class="review-date">Il y a 1 mois</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">
-                        Un traiteur d'exception ! Qualité des produits, créativité des plats, professionnalisme de l'équipe.
-                        Tout était parfait pour notre événement d'entreprise. Merci MAISON LOUISE ! 👏
-                    </p>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-avatar">F</div>
-                        <div class="review-author">
-                            <div class="review-name">Fatou S.</div>
-                            <div class="review-date">Il y a 2 mois</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">
-                        Nous avons choisi ce menu pour l'anniversaire de ma mère. C'était sublime !
-                        Chaque plat était une découverte. Service attentionné. Une vraie réussite ! ❤️
-                    </p>
-                </div>
-            </div>
+        <div class="days-selector">
+          <button class="day-btn active" data-day="lundi">Lundi</button>
+          <button class="day-btn" data-day="mardi">Mardi</button>
+          <button class="day-btn" data-day="mercredi">Mercredi</button>
+          <button class="day-btn" data-day="jeudi">Jeudi</button>
+          <button class="day-btn" data-day="vendredi">Vendredi</button>
         </div>
-    </section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content neomorph-card">
-                <div class="footer-brand">
-                    <h3>🍽️ MAISON LOUISE</h3>
-                    <p class="footer-tagline">Une Maison • Une Vision • Une Signature</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Contact</h4>
-                        <ul>
-                            <li><a href="tel:+221776151406">📞 +221 77 615 14 06</a></li>
-                            <li><a href="mailto:contact@maisonlouise.sn">📧 contact@maisonlouise.sn</a></li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="menu-details active" id="menu-lundi">
+          <div class="menu-section">
+            <h4><i class="fas fa-salad"></i> Entrée</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Salade César Revisitée</div>
+              <div class="menu-item-desc">Laitue romaine, parmesan, croûtons maison, sauce César</div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 MAISON LOUISE. Fait avec ❤️ à Dakar</p>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-drumstick-bite"></i> Plat</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Poulet Yassa</div>
+              <div class="menu-item-desc">Poulet mariné aux oignons caramélisés, riz basmati, légumes grillés</div>
             </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-ice-cream"></i> Dessert</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Thiakry Gourmet</div>
+              <div class="menu-item-desc">Couscous sucré, lait vanillé, fruits frais</div>
+            </div>
+          </div>
+          <div class="allergens-section">
+            <div class="allergens-title">
+              <i class="fas fa-exclamation-triangle"></i> Allergènes
+            </div>
+            <div class="allergens-list">Gluten, Œufs, Lactose</div>
+          </div>
         </div>
-    </footer>
 
-    <script src="js/app.js"></script>
-    <script>
-        // Système de Like avec LocalStorage
-        const likeBtn = document.getElementById('likeBtn');
-        const likeCount = document.getElementById('likeCount');
-        const plateauId = new URLSearchParams(window.location.search).get('id') || '1';
-        const likeKey = `liked_plateau_${plateauId}`;
-        let likes = parseInt(localStorage.getItem(`likes_${plateauId}`) || '127');
+        <!-- MARDI -->
+        <div class="menu-details" id="menu-mardi">
+          <div class="menu-section">
+            <h4><i class="fas fa-salad"></i> Entrée</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Velouté de Potiron</div>
+              <div class="menu-item-desc">Soupe crémeuse, graines de courge torréfiées</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-fish"></i> Plat</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Thiéboudiène Rouge</div>
+              <div class="menu-item-desc">Riz au poisson, légumes variés, sauce tomate</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-ice-cream"></i> Dessert</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Crème Caramel</div>
+              <div class="menu-item-desc">Caramel maison, vanille de Madagascar</div>
+            </div>
+          </div>
+          <div class="allergens-section">
+            <div class="allergens-title">
+              <i class="fas fa-exclamation-triangle"></i> Allergènes
+            </div>
+            <div class="allergens-list">Poisson, Lactose</div>
+          </div>
+        </div>
 
-        // Vérifier si déjà liké
-        if (localStorage.getItem(likeKey)) {
-            likeBtn.classList.add('liked');
-        }
+        <!-- MERCREDI -->
+        <div class="menu-details" id="menu-mercredi">
+          <div class="menu-section">
+            <h4><i class="fas fa-salad"></i> Entrée</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Fataya au Thon</div>
+              <div class="menu-item-desc">Chaussons croustillants, farce au thon épicée</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-drumstick-bite"></i> Plat</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Mafé de Bœuf</div>
+              <div class="menu-item-desc">Bœuf mijoté, sauce arachide onctueuse, riz blanc</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-ice-cream"></i> Dessert</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Salade de Fruits Exotiques</div>
+              <div class="menu-item-desc">Mangue, ananas, papaye, coulis de passion</div>
+            </div>
+          </div>
+          <div class="allergens-section">
+            <div class="allergens-title">
+              <i class="fas fa-exclamation-triangle"></i> Allergènes
+            </div>
+            <div class="allergens-list">Gluten, Poisson, Arachides</div>
+          </div>
+        </div>
 
-        likeBtn.addEventListener('click', () => {
-            if (likeBtn.classList.contains('liked')) {
-                // Unlike
-                likes--;
-                likeBtn.classList.remove('liked');
-                localStorage.removeItem(likeKey);
-            } else {
-                // Like
-                likes++;
-                likeBtn.classList.add('liked');
-                localStorage.setItem(likeKey, 'true');
+        <!-- JEUDI -->
+        <div class="menu-details" id="menu-jeudi">
+          <div class="menu-section">
+            <h4><i class="fas fa-salad"></i> Entrée</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Taboulé Libanais</div>
+              <div class="menu-item-desc">Persil, tomates, boulgour, menthe fraîche</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-drumstick-bite"></i> Plat</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Poulet DG</div>
+              <div class="menu-item-desc">Poulet braisé, légumes sautés, plantain frit</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-ice-cream"></i> Dessert</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Mousse au Chocolat</div>
+              <div class="menu-item-desc">Chocolat noir 70%, chantilly maison</div>
+            </div>
+          </div>
+          <div class="allergens-section">
+            <div class="allergens-title">
+              <i class="fas fa-exclamation-triangle"></i> Allergènes
+            </div>
+            <div class="allergens-list">Gluten, Œufs, Lactose</div>
+          </div>
+        </div>
 
-                // Animation
-                likeBtn.querySelector('i').style.animation = 'none';
-                setTimeout(() => likeBtn.querySelector('i').style.animation = 'heartBeat 0.5s', 10);
-            }
-            likeCount.textContent = likes;
-            localStorage.setItem(`likes_${plateauId}`, likes);
-        });
+        <!-- VENDREDI -->
+        <div class="menu-details" id="menu-vendredi">
+          <div class="menu-section">
+            <h4><i class="fas fa-salad"></i> Entrée</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Nems aux Crevettes</div>
+              <div class="menu-item-desc">Rouleaux croustillants, sauce aigre-douce</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-fish"></i> Plat</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Thiéboudiène Blanc</div>
+              <div class="menu-item-desc">Riz au poisson fumé, légumes, sauce blanche</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-ice-cream"></i> Dessert</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Tarte aux Fruits</div>
+              <div class="menu-item-desc">Pâte sablée, crème pâtissière, fruits de saison</div>
+            </div>
+          </div>
+          <div class="allergens-section">
+            <div class="allergens-title">
+              <i class="fas fa-exclamation-triangle"></i> Allergènes
+            </div>
+            <div class="allergens-list">Crustacés, Poisson, Gluten, Œufs</div>
+          </div>
+        </div>
 
-        // Formulaire d'avis
-        document.getElementById('reviewForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const btn = form.querySelector('button[type="submit"]');
-            const btnText = btn.innerHTML;
+        <!-- SAMEDI -->
+        <div class="menu-details" id="menu-samedi">
+          <div class="menu-section">
+            <h4><i class="fas fa-salad"></i> Entrée</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Accras de Morue</div>
+              <div class="menu-item-desc">Beignets de morue épicés, sauce chien</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-drumstick-bite"></i> Plat</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Domoda</div>
+              <div class="menu-item-desc">Agneau mijoté, sauce arachide douce, patates douces</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-ice-cream"></i> Dessert</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Cheesecake Mangue</div>
+              <div class="menu-item-desc">Base biscuit, crème cheese, coulis mangue</div>
+            </div>
+          </div>
+          <div class="allergens-section">
+            <div class="allergens-title">
+              <i class="fas fa-exclamation-triangle"></i> Allergènes
+            </div>
+            <div class="allergens-list">Poisson, Gluten, Arachides, Lactose</div>
+          </div>
+        </div>
 
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
-            btn.disabled = true;
+        <!-- DIMANCHE -->
+        <div class="menu-details" id="menu-dimanche">
+          <div class="menu-section">
+            <h4><i class="fas fa-salad"></i> Entrée</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Pastels</div>
+              <div class="menu-item-desc">Chaussons au poisson, sauce tomate épicée</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-drumstick-bite"></i> Plat</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Thiébou Kethiakh</div>
+              <div class="menu-item-desc">Riz au poulet, couscous roulé, légumes fondants</div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <h4><i class="fas fa-ice-cream"></i> Dessert</h4>
+            <div class="menu-item">
+              <div class="menu-item-name">Thiéré</div>
+              <div class="menu-item-desc">Couscous au lait caillé sucré, raisins secs</div>
+            </div>
+          </div>
+          <div class="allergens-section">
+            <div class="allergens-title">
+              <i class="fas fa-exclamation-triangle"></i> Allergènes
+            </div>
+            <div class="allergens-list">Poisson, Gluten, Lactose</div>
+          </div>
+        </div>
 
-            const reviewData = {
-                plateau_id: plateauId,
-                name: form.name.value,
-                email: form.email.value,
-                rating: parseInt(form.rating.value),
-                comment: form.comment.value
-            };
+        <!-- CARD COMMANDE -->
+        <div class="order-section">
+          <div class="order-header">
+            <h3>🛒 Passer Commande</h3>
+            <div class="order-selected-day">
+              Menu du <strong id="selectedDay">Lundi</strong>
+            </div>
+          </div>
 
-            try {
-                // REMPLACER PAR VOTRE API
-                const response = await fetch('https://api.maisonlouise.sn/avis', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(reviewData)
-                });
+          <div class="quantity-group">
+            <label class="quantity-label">Nombre de plateaux</label>
+            <div class="quantity-selector">
+              <button class="quantity-btn" id="decreaseBtn">
+                <i class="fas fa-minus"></i>
+              </button>
+              <div class="quantity-display" id="quantity">1</div>
+              <button class="quantity-btn" id="increaseBtn">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
 
-                if (response.ok) {
-                    showNotification('✅ Merci ! Votre avis sera publié après vérification.', 'success');
-                    form.reset();
-                } else {
-                    throw new Error('Erreur');
-                }
-            } catch (error) {
-                // Simulation
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                showNotification('✅ Avis reçu ! Il sera publié après vérification. (Mode démo)', 'success');
-                form.reset();
-            }
+          <div class="date-group">
+            <label class="date-label" for="deliveryDate">
+              Date de livraison souhaitée *
+            </label>
+            <input type="date" id="deliveryDate" class="date-input" required />
+          </div>
 
-            btn.innerHTML = btnText;
-            btn.disabled = false;
-        });
+          <div class="price-summary">
+            <div class="price-label">Total</div>
+            <div class="price-total">
+              <span id="totalPrice">25</span>€
+            </div>
+          </div>
 
-        function showNotification(message, type) {
-            const notif = document.createElement('div');
-            notif.style.cssText = `position:fixed;top:100px;right:2rem;background:var(--bg);padding:1.5rem 2rem;border-radius:1rem;box-shadow:var(--shadow);z-index:10000;max-width:400px;font-weight:600`;
-            notif.textContent = message;
-            document.body.appendChild(notif);
-            setTimeout(() => notif.remove(), 5000);
-        }
-    </script>
+          <button class="btn-neomorph btn-primary btn-large full-width" id="orderBtn">
+            <i class="fas fa-shopping-cart"></i> Commander
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content neomorph-card">
+      <div class="footer-brand">
+        <h3>MAISON LOUISE</h3>
+        <p class="footer-tagline">Une Maison • Une Vision • Une Signature</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+221776151406">📞 +221 77 615 14 06</a></li>
+            <li><a href="mailto:contact@maisonlouise.sn">📧 contact@maisonlouise.sn</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 MAISON LOUISE. Fait avec ❤️ à Dakar</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+  // ===== SYSTÈME DE LIKE =====
+  const likeBtn = document.getElementById('likeBtn');
+  const likeCount = document.getElementById('likeCount');
+  const plateauId = new URLSearchParams(window.location.search).get('id') || '1';
+  const likeKey = `liked_plateau_${plateauId}`;
+  let likes = parseInt(localStorage.getItem(`likes_${plateauId}`) || '127');
+
+  if (localStorage.getItem(likeKey)) {
+      likeBtn.classList.add('liked');
+  }
+
+  likeBtn.addEventListener('click', () => {
+      if (likeBtn.classList.contains('liked')) {
+          likes--;
+          likeBtn.classList.remove('liked');
+          localStorage.removeItem(likeKey);
+      } else {
+          likes++;
+          likeBtn.classList.add('liked');
+          localStorage.setItem(likeKey, 'true');
+          likeBtn.querySelector('i').style.animation = 'none';
+          setTimeout(() => likeBtn.querySelector('i').style.animation = 'heartBeat 0.5s', 10);
+      }
+      likeCount.textContent = likes;
+      localStorage.setItem(`likes_${plateauId}`, likes);
+  });
+
+  // ===== BOUTON PARTAGER =====
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+      if (navigator.share) {
+          try {
+              await navigator.share({
+                  title: 'Plateaux Repas - MAISON LOUISE',
+                  url: window.location.href
+              });
+          } catch (err) {
+              console.log('Share cancelled');
+          }
+      } else {
+          navigator.clipboard.writeText(window.location.href);
+          showNotification('🔗 Lien copié !', 'success');
+      }
+  });
+
+  // ===== SÉLECTION JOURS =====
+  const dayButtons = document.querySelectorAll('.day-btn');
+  const menuDetails = document.querySelectorAll('.menu-details');
+  const selectedDaySpan = document.getElementById('selectedDay');
+
+  const dayNames = {
+      'lundi': 'Lundi',
+      'mardi': 'Mardi',
+      'mercredi': 'Mercredi',
+      'jeudi': 'Jeudi',
+      'vendredi': 'Vendredi',
+      'samedi': 'Samedi',
+      'dimanche': 'Dimanche'
+  };
+
+  dayButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+          dayButtons.forEach(b => b.classList.remove('active'));
+          menuDetails.forEach(m => m.classList.remove('active'));
+
+          btn.classList.add('active');
+
+          const day = btn.dataset.day;
+          document.getElementById(`menu-${day}`).classList.add('active');
+
+          selectedDaySpan.textContent = dayNames[day];
+
+          quantity = 1;
+          updateQuantity();
+      });
+  });
+
+  // ===== GESTION QUANTITÉ =====
+  let quantity = 1;
+  const pricePerPlate = 25;
+  const quantityDisplay = document.getElementById('quantity');
+  const totalPriceDisplay = document.getElementById('totalPrice');
+  const decreaseBtn = document.getElementById('decreaseBtn');
+  const increaseBtn = document.getElementById('increaseBtn');
+
+  function updateQuantity() {
+      quantityDisplay.textContent = quantity;
+      totalPriceDisplay.textContent = (quantity * pricePerPlate);
+  }
+
+  decreaseBtn.addEventListener('click', () => {
+      if (quantity > 1) {
+          quantity--;
+          updateQuantity();
+          quantityDisplay.style.transform = 'scale(1.2)';
+          setTimeout(() => quantityDisplay.style.transform = 'scale(1)', 200);
+      }
+  });
+
+  increaseBtn.addEventListener('click', () => {
+      if (quantity < 99) {
+          quantity++;
+          updateQuantity();
+          quantityDisplay.style.transform = 'scale(1.2)';
+          setTimeout(() => quantityDisplay.style.transform = 'scale(1)', 200);
+      }
+  });
+
+  // ===== BOUTON COMMANDER =====
+  document.getElementById('orderBtn').addEventListener('click', () => {
+      const deliveryDate = document.getElementById('deliveryDate').value;
+
+      if (!deliveryDate) {
+          showNotification('⚠️ Veuillez sélectionner une date de livraison', 'error');
+          return;
+      }
+
+      const selectedDay = document.querySelector('.day-btn.active').dataset.day;
+      const dayName = dayNames[selectedDay];
+      const total = quantity * pricePerPlate;
+
+      const dateObj = new Date(deliveryDate);
+      const formattedDate = dateObj.toLocaleDateString('fr-FR', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+      });
+
+      const message = `✅ Commande confirmée !\n\nMenu du ${dayName}\nQuantité: ${quantity} plateau(x)\nLivraison: ${formattedDate}\nTotal: ${total}€\n\nNous vous contacterons sous 24h.`;
+
+      if (confirm(message)) {
+          showNotification(`✅ Commande enregistrée ! Total: ${total}€`, 'success');
+      }
+  });
+
+  // ===== NOTIFICATION =====
+  function showNotification(message, type) {
+      const notif = document.createElement('div');
+      notif.style.cssText = `
+          position:fixed;
+          top:100px;
+          right:2rem;
+          background:var(--bg);
+          padding:1.5rem 2rem;
+          border-radius:1rem;
+          box-shadow:var(--shadow);
+          z-index:10000;
+          max-width:400px;
+          font-weight:600;
+          transform:translateX(400px);
+          transition:transform 0.3s;
+          font-family:'Poppins',sans-serif
+      `;
+      if (type === 'success') {
+          notif.style.borderLeft = '4px solid #D4AF37';
+      } else if (type === 'error') {
+          notif.style.borderLeft = '4px solid #e74c3c';
+      }
+      notif.textContent = message;
+      document.body.appendChild(notif);
+      setTimeout(() => notif.style.transform = 'translateX(0)', 10);
+      setTimeout(() => {
+          notif.style.transform = 'translateX(400px)';
+          setTimeout(() => notif.remove(), 300);
+      }, 5000);
+  }
+</script>
 </body>
 </html>

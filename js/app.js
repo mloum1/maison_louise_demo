@@ -440,19 +440,15 @@ scrollTopBtn.addEventListener('click', () => {
   window.scrollTo({top: 0, behavior: 'smooth'});
 });
 
-// ===== SLIDESHOW HERO =====
 const slides = document.querySelectorAll('.slide');
 const dots = document.querySelectorAll('.dot');
 let currentSlide = 0;
 let slideInterval;
 
-// Fonction pour changer de slide
 function showSlide(index) {
-    // Retirer active de tous
     slides.forEach(slide => slide.classList.remove('active'));
     dots.forEach(dot => dot.classList.remove('active'));
 
-    // Boucler si nécessaire
     if (index >= slides.length) {
         currentSlide = 0;
     } else if (index < 0) {
@@ -461,48 +457,40 @@ function showSlide(index) {
         currentSlide = index;
     }
 
-    // Activer le slide et dot actuel
     slides[currentSlide].classList.add('active');
     dots[currentSlide].classList.add('active');
 }
 
-// Fonction pour slide suivant
 function nextSlide() {
     showSlide(currentSlide + 1);
 }
 
-// Fonction pour slide précédent
 function prevSlide() {
     showSlide(currentSlide - 1);
 }
 
-// Auto-play slideshow
 function startSlideshow() {
-    slideInterval = setInterval(nextSlide, 5000); // Change toutes les 5 secondes
+    slideInterval = setInterval(nextSlide, 5000);
 }
 
 function stopSlideshow() {
     clearInterval(slideInterval);
 }
 
-// Click sur dots pour navigation manuelle
 dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
         showSlide(index);
-        // Restart l'auto-play après click manuel
         stopSlideshow();
         startSlideshow();
     });
-}); // ✅ ACCOLADE FERMANTE AJOUTÉE ICI !
+});
 
-// Pause au hover du hero
 const heroSection = document.querySelector('.hero');
 if (heroSection) {
     heroSection.addEventListener('mouseenter', stopSlideshow);
     heroSection.addEventListener('mouseleave', startSlideshow);
 }
 
-// Navigation clavier (optionnel)
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
         prevSlide();
