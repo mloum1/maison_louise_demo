@@ -12,8 +12,6 @@
 
     .content-wrapper{display:grid;grid-template-columns:400px 1fr;gap:2rem;max-width:1400px;margin:0 auto}
     .days-column{position:sticky;top:120px;height:fit-content}.days-selector{display:flex;flex-direction:column;gap:0.75rem}.day-btn{padding:1.25rem 1.5rem;background:var(--bg);border:2px solid transparent;border-radius:1rem;box-shadow:var(--shadow);cursor:pointer;font-weight:700;font-size:1.05rem;transition:all 0.3s;text-align:left;font-family:'Poppins',sans-serif;color:var(--navy);position:relative}.day-btn:hover{box-shadow:var(--shadow-hover);transform:translateX(8px)}.day-btn.active{background:var(--gradient);color:var(--navy);border-color:var(--gold);transform:translateX(12px);box-shadow:0 8px 25px rgba(212,175,55,0.4)}.day-btn.active::after{content:'→';position:absolute;right:1.5rem;font-size:1.5rem;animation:arrowBounce 1s infinite}
-
-    /* Jours DÉSACTIVÉS (weekend) */
     .day-btn.disabled{opacity:0.4;cursor:not-allowed;background:rgba(0,0,0,0.05)}.day-btn.disabled:hover{transform:none;box-shadow:var(--shadow)}
 
     .details-column{min-height:600px}
@@ -77,8 +75,6 @@
     </p>
 
     <div class="content-wrapper">
-
-      <!-- COLONNE GAUCHE : Jours -->
       <div class="days-column">
         <div class="days-selector">
           <button class="day-btn active" data-day="lundi">📅 Lundi</button>
