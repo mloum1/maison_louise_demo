@@ -709,3 +709,238 @@ function createAvisCard(data) {
 
     return card;
 }
+// ===== DATA AVIS =====
+const avisData = [
+  { id: 1, avatar: '👰', name: 'Fatou Diop', category: 'mariage', event: '💍 Mariage', date: 'Il y a 2 semaines', stars: 5, text: 'Service absolument exceptionnel pour notre mariage ! L\'équipe de Maison Louise a su créer une ambiance magique. Les plats étaient délicieux et la présentation impeccable. Nos invités ne tarissent pas d\'éloges !', likes: 12 },
+  { id: 2, avatar: '👨‍💼', name: 'Mamadou Sarr', category: 'corporate', event: '💼 Corporate', date: 'Il y a 1 mois', stars: 5, text: 'Nous avons fait appel à Maison Louise pour notre séminaire d\'entreprise. Professionnalisme, ponctualité et qualité au rendez-vous. Le bar mobile a fait sensation auprès de nos collaborateurs !', likes: 8 },
+  { id: 3, avatar: '🎉', name: 'Aminata Kane', category: 'prive', event: '🎉 Anniversaire', date: 'Il y a 3 semaines', stars: 5, text: 'Pour les 50 ans de mon père, Maison Louise a créé une expérience inoubliable. Les cocktails signatures étaient un vrai régal et le service impeccable. Je recommande à 100% !', likes: 15 },
+  { id: 4, avatar: '🤵', name: 'Ibrahima Ndiaye', category: 'mariage', event: '💍 Mariage', date: 'Il y a 1 mois', stars: 5, text: 'Un grand merci à toute l\'équipe ! Du premier contact jusqu\'à la fin de la soirée, tout était parfait. La coordination était au top et nos invités ont adoré le menu personnalisé.', likes: 10 },
+  { id: 5, avatar: '👩‍💼', name: 'Aïssatou Seck', category: 'corporate', event: '💼 Lancement produit', date: 'Il y a 2 mois', stars: 5, text: 'Service professionnel et discret pour le lancement de notre nouveau produit. La qualité des mets et la présentation ont impressionné nos clients. Nous referons appel à eux !', likes: 6 },
+  { id: 6, avatar: '🎊', name: 'Moussa Fall', category: 'prive', event: '🎉 Baptême', date: 'Il y a 3 semaines', stars: 5, text: 'Excellente prestation pour le baptême de notre fille. L\'équipe était réactive, les plats délicieux et le service irréprochable. Rapport qualité-prix imbattable !', likes: 9 }
+];
+
+let filteredAvis = [...avisData];
+let currentIndex = 0;
+let cardsPerView = 3; // Desktop par défaut
+
+// ===== CALCULER CARDS PER VIEW =====
+function calculateCardsPerView() {
+  const width = window.innerWidth;
+  if (width <= 768) {
+    cardsPerView = 1;
+  } else if (width <= 1200) {
+    cardsPerView = 2;
+  } else {
+    cardsPerView = 3;
+  }
+}
+
+// ===== RENDER AVIS =====
+function renderAvis() {
+  const track = document.getElementById('carouselTrack');
+  if (!track) {
+    console.error('❌ Element #carouselTrack non trouvé !');
+    return;
+  }
+
+  track.innerHTML = '';
+
+  filteredAvis.forEach(avis => {
+    const card = `
+      <div class="avis-card neomorph-card" data-category="${avis.category}">
+        <div class="avis-header">
+          <div class="avis-avatar">${avis.avatar}</div>
+          <div class="avis-info">
+            <h4 class="avis-name">${avis.name}</h4>
+            <div class="avis-meta">
+              <span class="avis-event">${avis.event}</span>
+              <span class="avis-date">${avis.date}</span>
+            </div>
+          </div>
+          <div class="avis-rating">
+            <div class="stars">${'⭐'.repeat(avis.stars)}</div>
+          </div>
+        </div>
+        <p class="avis-text">"${avis.text}"</p>
+        <div class="avis-helpful">
+          <button class="btn-helpful">👍 Utile (${avis.likes})</button>
+        </div>
+      </div>
+    `;
+    track.innerHTML += card;
+  });
+
+  console.log(`✅ ${filteredAvis.length} cartes générées`);
+
+  // Attendre que le DOM se mette à jour
+  setTimeout(() => {
+    createDots();
+    updateCarousel();
+  }, 100);
+}
+
+// ===== DOTS =====
+function createDots() {
+  const dotsContainer = document.getElementById('carouselDots');
+  if (!dotsContainer) return;
+
+  dotsContainer.innerHTML = '';
+
+  const numPages = Math.ceil(filteredAvis.length / cardsPerView);
+
+  for (let i = 0; i < numPages; i++) {
+    const dot = document.createElement('button');
+    dot.classList.add('carousel-dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToPage(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  console.log(`✅ ${numPages} dots créés`);
+}
+
+// ===== UPDATE CAROUSEL =====
+function updateCarousel() {
+  const track = document.getElementById('carouselTrack');
+  const firstCard = track.querySelector('.avis-card');
+
+  if (!firstCard) {
+    console.error('❌ Aucune carte trouvée dans le carousel');
+    return;
+  }
+
+  const cardWidth = firstCard.offsetWidth;
+  const gap = 32; // 2rem
+  const slideDistance = (cardWidth + gap) * cardsPerView;
+
+  track.style.transform = `translateX(-${currentIndex * slideDistance}px)`;
+
+  console.log(`🎯 Carousel mis à jour: index=${currentIndex}, slideDistance=${slideDistance}px`);
+
+  const dots = document.querySelectorAll('.carousel-dot');
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentIndex);
+  });
+}
+
+// ===== NAVIGATION =====
+function goToPage(index) {
+  const numPages = Math.ceil(filteredAvis.length / cardsPerView);
+  currentIndex = Math.max(0, Math.min(index, numPages - 1));
+  updateCarousel();
+}
+
+function nextSlide() {
+  const numPages = Math.ceil(filteredAvis.length / cardsPerView);
+  currentIndex = (currentIndex + 1) % numPages;
+  updateCarousel();
+}
+
+function prevSlide() {
+  const numPages = Math.ceil(filteredAvis.length / cardsPerView);
+  currentIndex = (currentIndex - 1 + numPages) % numPages;
+  updateCarousel();
+}
+
+// ===== EVENT LISTENERS =====
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🚀 DOM chargé, initialisation...');
+
+  // Navigation
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+    });
+  }
+
+  // Filtres
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      if (filter === 'tous') {
+        filteredAvis = [...avisData];
+      } else {
+        filteredAvis = avisData.filter(avis => avis.category === filter);
+      }
+
+      const totalAvisEl = document.getElementById('totalAvis');
+      if (totalAvisEl) {
+        totalAvisEl.textContent = filteredAvis.length;
+      }
+
+      currentIndex = 0;
+      renderAvis();
+    });
+  });
+
+  // Modal
+  const modal = document.getElementById('avisModal');
+  const openBtn = document.getElementById('openModalBtn');
+  const closeBtn = document.getElementById('closeModalBtn');
+  const avisForm = document.getElementById('avisForm');
+  const commentInput = document.getElementById('avis-comment');
+  const charCount = document.querySelector('.char-count');
+
+  if (openBtn && modal) {
+    openBtn.addEventListener('click', () => {
+      modal.classList.add('show');
+      // Ne pas bloquer le scroll du body
+    });
+  }
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('show');
+      }
+    });
+  }
+
+  if (commentInput && charCount) {
+    commentInput.addEventListener('input', () => {
+      charCount.textContent = `${commentInput.value.length} / 500 caractères`;
+    });
+  }
+
+  if (avisForm && modal) {
+    avisForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('✅ Merci pour votre avis !');
+      modal.classList.remove('show');
+      avisForm.reset();
+      if (charCount) {
+        charCount.textContent = '0 / 500 caractères';
+      }
+    });
+  }
+
+  // Responsive
+  window.addEventListener('resize', () => {
+    calculateCardsPerView();
+    updateCarousel();
+  });
+
+  // INIT
+  calculateCardsPerView();
+  renderAvis();
+
+  console.log('✅ Initialisation terminée !');
+});
