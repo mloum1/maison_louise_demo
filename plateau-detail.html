@@ -367,17 +367,32 @@
   </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script src="js/app.js"></script>
 <script>
+  // ✅ ===== CONFIGURATION EMAILJS (TES VRAIS IDS) =====
+  const EMAILJS_CONFIG = {
+    PUBLIC_KEY: 'CVThEmhHV2jGIBTFF',
+    SERVICE_ID: 'service_9wa3jyy',
+    TEMPLATE_ID: 'template_qi84e9d'
+  };
+
+ window.addEventListener('load', function() {
+  if (typeof emailjs !== 'undefined') {
+    try {
+      emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+      console.log('✅ EmailJS initialisé avec succès');
+    } catch (error) {
+      console.error('❌ Erreur initialisation EmailJS:', error);
+    }
+  } else {
+    console.error('❌ EmailJS SDK non chargé !');
+  }
+});
+
   // ===== SYSTÈME DE NOTIFICATIONS =====
   function showNotification(title, message, type = 'info') {
-    const icons = {
-      error: 'fa-circle-xmark',
-      warning: 'fa-triangle-exclamation',
-      success: 'fa-circle-check',
-      info: 'fa-circle-info'
-    };
-
+    const icons = { error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation', success: 'fa-circle-check', info: 'fa-circle-info' };
     const notif = document.createElement('div');
     notif.className = `notification ${type}`;
     notif.innerHTML = `
@@ -388,24 +403,19 @@
       </div>
       <button class="notification-close">&times;</button>
     `;
-
     document.body.appendChild(notif);
-
     setTimeout(() => notif.classList.add('show'), 10);
-
-    const closeBtn = notif.querySelector('.notification-close');
-    closeBtn.addEventListener('click', () => {
+    notif.querySelector('.notification-close').addEventListener('click', () => {
       notif.classList.remove('show');
       setTimeout(() => notif.remove(), 400);
     });
-
     setTimeout(() => {
       notif.classList.remove('show');
       setTimeout(() => notif.remove(), 400);
     }, 5000);
   }
 
-  // ===== MODAL DE CONFIRMATION =====
+  // ===== MODAL CONFIRMATION =====
   function showConfirm(title, message, onConfirm, iconType = 'warning') {
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
@@ -424,38 +434,169 @@
         </div>
       </div>
     `;
-
     document.body.appendChild(modal);
     setTimeout(() => modal.classList.add('show'), 10);
-
-    const cancelBtn = modal.querySelector('.modal-btn-cancel');
-    const confirmBtn = modal.querySelector('.modal-btn-confirm');
-
     function closeModal() {
       modal.classList.remove('show');
       setTimeout(() => modal.remove(), 300);
     }
-
-    cancelBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-
-    confirmBtn.addEventListener('click', () => {
+    modal.querySelector('.modal-btn-cancel').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    modal.querySelector('.modal-btn-confirm').addEventListener('click', () => {
       closeModal();
       if (onConfirm) onConfirm();
     });
   }
 
-  // ===== LIKE =====
+  // ✅ ===== MODAL INFO CLIENT =====
+  function showClientInfoModal(orderData, onSubmit) {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+      <div class="modal-box" style="max-width: 600px;">
+        <div class="modal-header">
+          <div class="modal-icon success"><i class="fas fa-user-circle"></i></div>
+          <h3 class="modal-title">Vos Informations</h3>
+          <p style="font-size:0.9rem;color:var(--text-light);margin-top:0.5rem">Dernière étape avant validation</p>
+        </div>
+        <form id="clientInfoForm">
+          <div style="margin-bottom:1.5rem">
+            <label style="display:block;font-weight:700;margin-bottom:0.75rem;color:var(--navy);font-size:1rem">Nom complet *</label>
+            <input type="text" id="clientName" required placeholder="Ex: Fatou Diop"
+                   style="width:100%;padding:1rem;background:var(--bg);border:2px solid transparent;border-radius:1rem;box-shadow:var(--shadow);font-family:'Poppins',sans-serif;font-size:1rem;transition:all 0.3s;color:var(--navy)">
+          </div>
+          <div style="margin-bottom:1.5rem">
+            <label style="display:block;font-weight:700;margin-bottom:0.75rem;color:var(--navy);font-size:1rem">Téléphone *</label>
+            <input type="tel" id="clientPhone" required placeholder="Ex: +221 77 123 45 67"
+                   style="width:100%;padding:1rem;background:var(--bg);border:2px solid transparent;border-radius:1rem;box-shadow:var(--shadow);font-family:'Poppins',sans-serif;font-size:1rem;transition:all 0.3s;color:var(--navy)">
+          </div>
+          <div style="margin-bottom:1.5rem">
+            <label style="display:block;font-weight:700;margin-bottom:0.75rem;color:var(--navy);font-size:1rem">Email *</label>
+            <input type="email" id="clientEmail" required placeholder="Ex: votremail@example.com"
+                   style="width:100%;padding:1rem;background:var(--bg);border:2px solid transparent;border-radius:1rem;box-shadow:var(--shadow);font-family:'Poppins',sans-serif;font-size:1rem;transition:all 0.3s;color:var(--navy)">
+          </div>
+          <div style="margin-bottom:1.5rem">
+            <label style="display:block;font-weight:700;margin-bottom:0.75rem;color:var(--navy);font-size:1rem">Adresse de livraison *</label>
+            <input type="text" id="clientAddress" required placeholder="Ex: Sicap Foire, Dakar"
+                   style="width:100%;padding:1rem;background:var(--bg);border:2px solid transparent;border-radius:1rem;box-shadow:var(--shadow);font-family:'Poppins',sans-serif;font-size:1rem;transition:all 0.3s;color:var(--navy)">
+          </div>
+          <div style="margin-bottom:1.5rem">
+            <label style="display:block;font-weight:700;margin-bottom:0.75rem;color:var(--navy);font-size:1rem">Commentaire (optionnel)</label>
+            <textarea id="clientComment" placeholder="Instructions spéciales, allergies particulières..." rows="3"
+                      style="width:100%;padding:1rem;background:var(--bg);border:2px solid transparent;border-radius:1rem;box-shadow:var(--shadow);font-family:'Poppins',sans-serif;font-size:1rem;transition:all 0.3s;color:var(--navy);resize:vertical"></textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="modal-btn modal-btn-cancel" id="cancelClientBtn">Annuler</button>
+            <button type="submit" class="modal-btn modal-btn-confirm">
+              <i class="fas fa-paper-plane"></i> Envoyer la commande
+            </button>
+          </div>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('show'), 10);
+
+    // Focus styling
+    document.querySelectorAll('#clientInfoForm input, #clientInfoForm textarea').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.style.borderColor = 'var(--gold)';
+        this.style.boxShadow = 'var(--shadow-hover)';
+      });
+      input.addEventListener('blur', function() {
+        this.style.borderColor = 'transparent';
+        this.style.boxShadow = 'var(--shadow)';
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove('show');
+      setTimeout(() => modal.remove(), 300);
+    }
+    document.getElementById('cancelClientBtn').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+    document.getElementById('clientInfoForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const clientInfo = {
+        name: document.getElementById('clientName').value.trim(),
+        phone: document.getElementById('clientPhone').value.trim(),
+        email: document.getElementById('clientEmail').value.trim(),
+        address: document.getElementById('clientAddress').value.trim(),
+        comment: document.getElementById('clientComment').value.trim() || 'Aucun commentaire'
+      };
+      closeModal();
+      onSubmit(clientInfo);
+    });
+  }
+
+  // ✅ ===== ENVOI EMAIL EMAILJS =====
+  async function sendOrderEmail(orderData, clientInfo) {
+    const submitBtn = document.querySelector('.order-btn[data-menu="' + orderData.menu + '"]');
+    const originalHTML = submitBtn.innerHTML;
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+
+    try {
+      const templateParams = {
+        client_name: clientInfo.name,
+        client_email: clientInfo.email,
+        client_phone: clientInfo.phone,
+        client_address: clientInfo.address,
+        client_comment: clientInfo.comment,
+        menu_jour: orderData.menu.charAt(0).toUpperCase() + orderData.menu.slice(1),
+        quantite: orderData.quantity,
+        date_livraison: new Date(orderData.deliveryDate + 'T00:00:00').toLocaleDateString('fr-FR', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        }),
+        prix_total: orderData.total + '€',
+        date_commande: new Date().toLocaleDateString('fr-FR') + ' à ' + new Date().toLocaleTimeString('fr-FR'),
+        numero_commande: 'CMD-' + Date.now()
+      };
+
+      console.log('📧 Envoi email...', templateParams);
+
+      const response = await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        templateParams
+      );
+
+      console.log("la reponse : ", response);
+
+      console.log('✅ Email envoyé !', response);
+
+      showNotification(
+        'Commande envoyée !',
+        `Votre commande a été envoyée avec succès. Vous recevrez une confirmation à ${clientInfo.email}`,
+        'success'
+      );
+
+      // Reset formulaire
+      document.querySelector('.date-' + orderData.menu).value = '';
+      quantities[orderData.menu] = 1;
+      document.querySelector('.qty-' + orderData.menu).textContent = 1;
+      document.querySelector('.price-' + orderData.menu).textContent = pricePerPlate;
+
+    } catch (error) {
+      console.error('❌ Erreur EmailJS:', error);
+      showNotification(
+        'Erreur d\'envoi',
+        'Impossible d\'envoyer la commande. Veuillez réessayer ou nous contacter au +221 77 615 14 06',
+        'error'
+      );
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalHTML;
+    }
+  }
+
+  // ===== LIKE & SHARE =====
   const likeBtn = document.getElementById('likeBtn');
   const likeCount = document.getElementById('likeCount');
   let likes = 127;
-
-  if (localStorage.getItem('liked')) {
-    likeBtn.classList.add('liked');
-  }
-
+  if (localStorage.getItem('liked')) likeBtn.classList.add('liked');
   likeBtn.addEventListener('click', () => {
     if (likeBtn.classList.contains('liked')) {
       likes--;
@@ -465,67 +606,40 @@
       likes++;
       likeBtn.classList.add('liked');
       localStorage.setItem('liked', '1');
-      likeBtn.querySelector('i').style.animation = 'heartBeat 0.5s';
     }
     likeCount.textContent = likes;
   });
 
-  // ===== SHARE =====
   document.getElementById('shareBtn').addEventListener('click', async () => {
     if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Plateaux MAISON LOUISE',
-          url: location.href
-        });
-      } catch (e) {
-        console.log('Share cancelled');
-      }
+      try { await navigator.share({ title: 'Plateaux MAISON LOUISE', url: location.href }); }
+      catch (e) { console.log('Share cancelled'); }
     } else {
       navigator.clipboard.writeText(location.href);
       showNotification('Lien copié', 'Le lien a été copié dans votre presse-papiers', 'success');
     }
   });
 
+  // ===== DATES & VALIDATIONS =====
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
   const minDate = tomorrow.toISOString().split('T')[0];
-
   const maxDateObj = new Date(today);
   maxDateObj.setDate(maxDateObj.getDate() + 30);
   const maxDate = maxDateObj.toISOString().split('T')[0];
 
-  const dayMapping = {
-    'lundi': 1,
-    'mardi': 2,
-    'mercredi': 3,
-    'jeudi': 4,
-    'vendredi': 5,
-    'samedi': 6,
-    'dimanche': 0
-  };
-
+  const dayMapping = { 'lundi': 1, 'mardi': 2, 'mercredi': 3, 'jeudi': 4, 'vendredi': 5, 'samedi': 6, 'dimanche': 0 };
   let currentSelectedDay = 'lundi';
+
   function isWeekend(dateString) {
     const date = new Date(dateString + 'T00:00:00');
-    const day = date.getDay();
-    return day === 0 || day === 6;
+    return date.getDay() === 0 || date.getDay() === 6;
   }
 
   function isHoliday(dateString) {
-    const holidays = [
-      '2026-01-01',
-      '2026-04-04',
-      '2026-04-06',
-      '2026-05-01',
-      '2026-05-25',
-      '2026-08-15',
-      '2026-11-01',
-      '2026-12-25'
-    ];
+    const holidays = ['2026-01-01','2026-04-04','2026-04-06','2026-05-01','2026-05-25','2026-08-15','2026-11-01','2026-12-25'];
     return holidays.includes(dateString);
   }
 
@@ -534,148 +648,77 @@
     return date.getDay() === dayMapping[selectedDay];
   }
 
-function getNextMatchingDay(selectedDay) {
-  const targetDay = dayMapping[selectedDay];
-
-  const searchStart = new Date(minDate);
-  const searchEnd = new Date(maxDate);
-
-  for (let d = new Date(searchStart); d <= searchEnd; d.setDate(d.getDate() + 1)) {
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    const dateString = `${yyyy}-${mm}-${dd}`;
-
-    const dayNum = d.getDay();
-
-    // Check: bon jour + pas weekend + pas férié
-    if (dayNum === targetDay && dayNum !== 0 && dayNum !== 6 && !isHoliday(dateString)) {
-      return dateString;
+  function getNextMatchingDay(selectedDay) {
+    const targetDay = dayMapping[selectedDay];
+    const searchStart = new Date(minDate);
+    const searchEnd = new Date(maxDate);
+    for (let d = new Date(searchStart); d <= searchEnd; d.setDate(d.getDate() + 1)) {
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      const dateString = `${yyyy}-${mm}-${dd}`;
+      const dayNum = d.getDay();
+      if (dayNum === targetDay && dayNum !== 0 && dayNum !== 6 && !isHoliday(dateString)) return dateString;
     }
+    return null;
   }
 
-  return null;
-}
-
-  // ===== VALIDATION DES INPUTS DATE =====
+  // ===== VALIDATION INPUTS DATE =====
   document.querySelectorAll('.date-input').forEach(input => {
     input.setAttribute('min', minDate);
     input.setAttribute('max', maxDate);
-
     input.addEventListener('change', function() {
       const selectedDate = this.value;
-
       if (!selectedDate) return;
+
       if (selectedDate < minDate) {
-        showNotification(
-          'Date invalide',
-          'La date doit être au minimum demain (délai de commande 24h)',
-          'error'
-        );
+        showNotification('Date invalide', 'La date doit être au minimum demain (délai de commande 24h)', 'error');
         this.value = '';
-        this.focus();
         return;
       }
-
       if (selectedDate > maxDate) {
-        showNotification(
-          'Date trop lointaine',
-          'Vous ne pouvez commander que 30 jours à l\'avance maximum',
-          'error'
-        );
+        showNotification('Date trop lointaine', 'Vous ne pouvez commander que 30 jours à l\'avance maximum', 'error');
         this.value = '';
-        this.focus();
         return;
       }
-
-      // Validation 3: Weekend
       if (isWeekend(selectedDate)) {
         const nextDay = getNextMatchingDay(currentSelectedDay);
-
         if (!nextDay) {
-          showNotification(
-            'Aucune date disponible',
-            'Aucun ' + currentSelectedDay + ' disponible dans les 30 prochains jours',
-            'error'
-          );
+          showNotification('Aucune date disponible', 'Aucun ' + currentSelectedDay + ' disponible dans les 30 prochains jours', 'error');
           this.value = '';
-          this.focus();
           return;
         }
-
-        const nextDayFormatted = new Date(nextDay + 'T00:00:00').toLocaleDateString('fr-FR', {
-          weekday: 'long',
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric'
-        });
-
-        showConfirm(
-          'Livraison impossible le weekend',
-          `Les samedis et dimanches ne sont pas disponibles.\n\nProchain ${currentSelectedDay} disponible:\n${nextDayFormatted}\n\nVoulez-vous sélectionner automatiquement cette date?`,
-          () => { this.value = nextDay; },
-          'warning'
-        );
-
+        const nextDayFormatted = new Date(nextDay + 'T00:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        showConfirm('Livraison impossible le weekend', `Les samedis et dimanches ne sont pas disponibles.\n\nProchain ${currentSelectedDay} disponible:\n${nextDayFormatted}\n\nVoulez-vous sélectionner automatiquement cette date?`,
+          () => { this.value = nextDay; }, 'warning');
         this.value = '';
         return;
       }
-
-      // Validation 4: Jour férié
       if (isHoliday(selectedDate)) {
-        showNotification(
-          'Jour férié',
-          'Pas de livraison les jours fériés',
-          'warning'
-        );
+        showNotification('Jour férié', 'Pas de livraison les jours fériés', 'warning');
         this.value = '';
-        this.focus();
         return;
       }
-
-      // Validation 5: Mauvais jour de la semaine
       if (!isCorrectDayOfWeek(selectedDate, currentSelectedDay)) {
-        const selectedDayOfWeek = new Date(selectedDate + 'T00:00:00').toLocaleDateString('fr-FR', {
-          weekday: 'long'
-        });
         const nextCorrectDay = getNextMatchingDay(currentSelectedDay);
-
         if (!nextCorrectDay) {
-          showNotification(
-            'Aucune date disponible',
-            'Aucun ' + currentSelectedDay + ' disponible dans les 30 prochains jours',
-            'error'
-          );
+          showNotification('Aucune date disponible', 'Aucun ' + currentSelectedDay + ' disponible dans les 30 prochains jours', 'error');
           this.value = '';
-          this.focus();
           return;
         }
-
-        const nextDayFormatted = new Date(nextCorrectDay + 'T00:00:00').toLocaleDateString('fr-FR', {
-          weekday: 'long',
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric'
-        });
-
-        showConfirm(
-          'Mauvais jour sélectionné',
-          `Vous avez sélectionné le menu du ${currentSelectedDay}.\nVous devez choisir un ${currentSelectedDay}.\n\nDate sélectionnée: ${selectedDayOfWeek}\n\nProchain ${currentSelectedDay} disponible:\n${nextDayFormatted}\n\nSélectionner automatiquement?`,
-          () => { this.value = nextCorrectDay; },
-          'warning'
-        );
-
+        const nextDayFormatted = new Date(nextCorrectDay + 'T00:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        showConfirm('Mauvais jour sélectionné', `Vous avez sélectionné le menu du ${currentSelectedDay}.\nVous devez choisir un ${currentSelectedDay}.\n\nProchain ${currentSelectedDay} disponible:\n${nextDayFormatted}\n\nSélectionner automatiquement?`,
+          () => { this.value = nextCorrectDay; }, 'warning');
         this.value = '';
         return;
       }
 
-      // Date valide - Animation de confirmation
       this.style.borderColor = '#27ae60';
       setTimeout(() => { this.style.borderColor = ''; }, 1000);
     });
   });
 
-  // ===== SÉLECTION DES JOURS =====
+  // ===== SÉLECTION JOURS =====
   const dayBtns = document.querySelectorAll('.day-btn');
   const menuCards = document.querySelectorAll('.menu-card');
   const weekendMsg = document.getElementById('weekendMessage');
@@ -683,38 +726,25 @@ function getNextMatchingDay(selectedDay) {
   dayBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       if (btn.classList.contains('disabled')) return;
-
       dayBtns.forEach(b => b.classList.remove('active'));
       menuCards.forEach(m => m.classList.remove('active'));
       weekendMsg.classList.remove('active');
       btn.classList.add('active');
-
       const day = btn.dataset.day;
       currentSelectedDay = day;
-
       if (day === 'samedi' || day === 'dimanche') {
         weekendMsg.classList.add('active');
       } else {
         document.getElementById(`menu-${day}`).classList.add('active');
-
-        // Réinitialiser les dates qui ne correspondent plus
         document.querySelectorAll('.date-input').forEach(input => {
-          if (input.value && !isCorrectDayOfWeek(input.value, day)) {
-            input.value = '';
-          }
+          if (input.value && !isCorrectDayOfWeek(input.value, day)) input.value = '';
         });
       }
     });
   });
 
   // ===== GESTION QUANTITÉ =====
-  const quantities = {
-    lundi: 1,
-    mardi: 1,
-    mercredi: 1,
-    jeudi: 1,
-    vendredi: 1
-  };
+  const quantities = { lundi: 1, mardi: 1, mercredi: 1, jeudi: 1, vendredi: 1 };
   const pricePerPlate = 25;
 
   document.querySelectorAll('.dec-btn').forEach(btn => {
@@ -739,154 +769,53 @@ function getNextMatchingDay(selectedDay) {
     });
   });
 
-  // ===== BOUTON COMMANDER =====
+  // ✅ ===== BOUTON COMMANDER (AVEC EMAILJS) =====
   document.querySelectorAll('.order-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const menu = btn.dataset.menu;
       const dateInput = document.querySelector('.date-' + menu);
       const date = dateInput.value;
 
-      // Validation 1: Date manquante
       if (!date) {
-        showNotification(
-          'Date manquante',
-          'Veuillez sélectionner une date de livraison',
-          'warning'
-        );
+        showNotification('Date manquante', 'Veuillez sélectionner une date de livraison', 'warning');
         dateInput.focus();
         return;
       }
 
-      // Validation 2: Date passée
-      if (date < minDate) {
-        showNotification(
-          'Date trop proche',
-          'Délai minimum: 24 heures',
-          'error'
-        );
-        dateInput.value = '';
-        dateInput.focus();
+      if (date < minDate || date > maxDate || isWeekend(date) || isHoliday(date) || !isCorrectDayOfWeek(date, menu)) {
+        showNotification('Date invalide', 'Veuillez choisir une date valide', 'error');
         return;
       }
 
-      // Validation 3: Date trop lointaine
-      if (date > maxDate) {
-        showNotification(
-          'Date trop lointaine',
-          'Maximum 30 jours à l\'avance',
-          'error'
-        );
-        dateInput.value = '';
-        dateInput.focus();
-        return;
-      }
-
-      // Validation 4: Weekend
-      if (isWeekend(date)) {
-        showNotification(
-          'Livraison impossible',
-          'Pas de livraison le weekend',
-          'error'
-        );
-        dateInput.value = '';
-        dateInput.focus();
-        return;
-      }
-
-      // Validation 5: Jour férié
-      if (isHoliday(date)) {
-        showNotification(
-          'Jour férié',
-          'Pas de livraison ce jour-là',
-          'warning'
-        );
-        dateInput.value = '';
-        dateInput.focus();
-        return;
-      }
-
-      // Validation 6: Mauvais jour
-      if (!isCorrectDayOfWeek(date, menu)) {
-        showNotification(
-          'Mauvais jour',
-          `Menu du ${menu} = Livraison un ${menu}. Veuillez choisir un ${menu}.`,
-          'error'
-        );
-        dateInput.value = '';
-        dateInput.focus();
-        return;
-      }
-
-      // Validation 7: Quantité
       const qty = quantities[menu];
-      if (qty < 1) {
-        showNotification(
-          'Quantité invalide',
-          'Veuillez sélectionner au moins 1 plateau',
-          'error'
-        );
+      if (qty < 1 || qty > 50) {
+        showNotification('Quantité invalide', 'Quantité entre 1 et 50 plateaux', 'error');
         return;
       }
 
-      if (qty > 50) {
-        showNotification(
-          'Grande commande',
-          'Pour les commandes de plus de 50 plateaux, contactez-nous au +221 77 615 14 06',
-          'info'
-        );
-        return;
-      }
-
-      // Toutes validations OK - Confirmation
       const total = qty * pricePerPlate;
       const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('fr-FR', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
       });
 
       const confirmMsg = `📋 Menu: ${menu.charAt(0).toUpperCase() + menu.slice(1)}\n📦 Quantité: ${qty} plateau(x)\n📅 Livraison: ${formattedDate}\n💰 Total: ${total}€\n\nConfirmer la commande?`;
 
-      showConfirm(
-        'Récapitulatif de commande',
-        confirmMsg,
-        () => {
-          // Données de commande
-          const orderData = {
-            menu: menu,
-            quantity: qty,
-            deliveryDate: date,
-            total: total,
-            timestamp: new Date().toISOString()
-          };
+      showConfirm('Récapitulatif de commande', confirmMsg, () => {
+        const orderData = {
+          menu: menu,
+          quantity: qty,
+          deliveryDate: date,
+          total: total,
+          timestamp: new Date().toISOString()
+        };
 
-          console.log('📦 Commande enregistrée:', orderData);
 
-          // TODO: Envoyer à votre API
-          // fetch('/api/orders', {
-          //   method: 'POST',
-          //   headers: { 'Content-Type': 'application/json' },
-          //   body: JSON.stringify(orderData)
-          // });
-
-          showNotification(
-            'Commande confirmée',
-            'Votre commande a été enregistrée avec succès. Nous vous contacterons sous 24h.',
-            'success'
-          );
-
-          // Réinitialiser le formulaire
-          dateInput.value = '';
-          quantities[menu] = 1;
-          document.querySelector('.qty-' + menu).textContent = 1;
-          document.querySelector('.price-' + menu).textContent = pricePerPlate;
-        },
-        'success'
-      );
+        showClientInfoModal(orderData, (clientInfo) => {
+          sendOrderEmail(orderData, clientInfo);
+        });
+      }, 'success');
     });
   });
-
 </script>
 </body>
 </html>
