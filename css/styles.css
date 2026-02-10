@@ -694,7 +694,8 @@ a {
 /* ===== PLATEAUX SECTION ===== */
 .plateaux-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  justify-content: center;
+  grid-template-columns: 35% 35%;
   gap: 2.5rem;
   margin-bottom: 3rem;
 }
@@ -2017,3 +2018,18 @@ a {
     height: 250px;
   }
 }
+.two-columns {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+.inspired {
+ margin-top: 2rem;
+}
+.about-image {
+  border-radius:11px ;
+  object-fit: fill;
+}
+
