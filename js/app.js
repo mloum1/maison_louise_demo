@@ -460,7 +460,7 @@ function prevHeroSlide() {
 }
 
 function startSlideshow() {
-    slideInterval = setInterval(nextHeroSlide, 5000);
+    slideInterval = setInterval(nextHeroSlide, 3000);
 }
 
 function stopSlideshow() {
