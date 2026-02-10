@@ -1,22 +1,18 @@
-// Navigation
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 navToggle?.addEventListener('click', () => navMenu.classList.toggle('active'));
 
-// Close menu when clicking outside
 document.addEventListener('click', (e) => {
     if (!navToggle?.contains(e.target) && !navMenu?.contains(e.target)) {
         navMenu?.classList.remove('active');
     }
 });
 
-// Scroll navbar
 window.addEventListener('scroll', () => {
   const navbar = document.getElementById('navbar');
   navbar.classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// Vidéo Hero Responsive + Bouton volume discret
 const heroVideo = document.getElementById('heroVideo');
 if (heroVideo) {
     const volumeBtn = document.createElement('button');
@@ -69,9 +65,6 @@ if (heroVideo) {
     document.querySelector('.hero').appendChild(volumeBtn);
 }
 
-// ============================================
-// SUGGESTION 2 : Lazy Loading des images
-// ============================================
 const lazyImages = document.querySelectorAll('img[loading="lazy"]');
 if ('IntersectionObserver' in window) {
   const imageObserver = new IntersectionObserver((entries) => {
@@ -88,9 +81,7 @@ if ('IntersectionObserver' in window) {
   lazyImages.forEach(img => imageObserver.observe(img));
 }
 
-// ============================================
-// SUGGESTION 3 : Scroll Animations améliorées
-// ============================================
+
 const animateOnScroll = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -104,7 +95,6 @@ document.querySelectorAll('.neomorph-card, .section-header').forEach(el => {
   animateOnScroll.observe(el);
 });
 
-// Scroll navbar
 window.addEventListener('scroll', () => {
     const navbar = document.getElementById('navbar');
     navbar.classList.toggle('scrolled', window.scrollY > 50);
@@ -445,7 +435,7 @@ const dots = document.querySelectorAll('.dot');
 let currentSlide = 0;
 let slideInterval;
 
-function showSlide(index) {
+function showHeroSlide(index) {
     slides.forEach(slide => slide.classList.remove('active'));
     dots.forEach(dot => dot.classList.remove('active'));
 
@@ -461,16 +451,16 @@ function showSlide(index) {
     dots[currentSlide].classList.add('active');
 }
 
-function nextSlide() {
-    showSlide(currentSlide + 1);
+function nextHeroSlide() {
+    showHeroSlide(currentSlide + 1);
 }
 
-function prevSlide() {
-    showSlide(currentSlide - 1);
+function prevHeroSlide() {
+    showHeroSlide(currentSlide - 1);
 }
 
 function startSlideshow() {
-    slideInterval = setInterval(nextSlide, 5000);
+    slideInterval = setInterval(nextHeroSlide, 5000);
 }
 
 function stopSlideshow() {
@@ -479,7 +469,7 @@ function stopSlideshow() {
 
 dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
-        showSlide(index);
+        showHeroSlide(index);
         stopSlideshow();
         startSlideshow();
     });
@@ -497,14 +487,14 @@ document.addEventListener('keydown', (e) => {
         stopSlideshow();
         startSlideshow();
     } else if (e.key === 'ArrowRight') {
-        nextSlide();
+        nextHeroSlide();
         stopSlideshow();
         startSlideshow();
     }
 });
 
 if (slides.length > 0) {
-    showSlide(0);
+    showHeroSlide(0);
     startSlideshow();
 }
 
@@ -931,16 +921,102 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
-  // Responsive
   window.addEventListener('resize', () => {
     calculateCardsPerView();
     updateCarousel();
   });
-
-  // INIT
   calculateCardsPerView();
   renderAvis();
 
   console.log('✅ Initialisation terminée !');
+});
+
+
+const quoteModal = document.getElementById('quoteModal');
+const openQuoteBtn = document.getElementById('openQuoteBtn');
+const closeQuoteBtn = document.getElementById('closeQuoteBtn');
+const cancelQuoteBtn = document.getElementById('cancelQuoteBtn');
+const messageInput = document.getElementById('message');
+const charCountSpan = document.getElementById('charCount');
+
+// Ouvrir modal
+openQuoteBtn.addEventListener('click', () => {
+  quoteModal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+});
+
+// Fermer modal
+function closeModal() {
+  quoteModal.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+closeQuoteBtn.addEventListener('click', closeModal);
+cancelQuoteBtn.addEventListener('click', closeModal);
+
+// Fermer au clic sur overlay
+quoteModal.addEventListener('click', (e) => {
+  if (e.target.classList.contains('quote-modal-overlay')) {
+    closeModal();
+  }
+});
+
+// Compteur caractères
+if (messageInput && charCountSpan) {
+  messageInput.addEventListener('input', () => {
+    const length = messageInput.value.length;
+    charCountSpan.textContent = length;
+
+    if (length > 450) {
+      charCountSpan.style.color = '#e74c3c';
+    } else {
+      charCountSpan.style.color = 'var(--text-light)';
+    }
+  });
+}
+
+contactForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = {
+    name: contactForm.name.value,
+    email: contactForm.email.value,
+    phone: contactForm.phone.value,
+    company: contactForm.company.value,
+    event: contactForm.event.value,
+    date: contactForm.date.value,
+    guests: contactForm.guests.value,
+    budget: contactForm.budget.value,
+    services: Array.from(contactForm.querySelectorAll('input[name="services[]"]:checked')).map(cb => cb.value),
+    message: contactForm.message.value
+  };
+
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const originalHTML = submitBtn.innerHTML;
+
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+
+  try {
+    // REMPLACER PAR TON API EmailJS ou Backend
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Succès
+    showNotification('✅ Demande envoyée ! Nous vous répondrons sous 24h.', 'success');
+    contactForm.reset();
+    charCountSpan.textContent = '0';
+    closeModal();
+
+  } catch (error) {
+    showNotification('❌ Erreur d\'envoi. Veuillez réessayer ou nous appeler.', 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalHTML;
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && quoteModal.classList.contains('show')) {
+    closeModal();
+  }
 });

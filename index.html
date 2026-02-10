@@ -54,9 +54,7 @@
             <div class="hero-badge neomorph-card animate-float">
               <span>✨ Traiteur d'Exception au Sénégal</span>
             </div>
-            <div class="hero-logo">
-              <h1 class="hero-brand">MAISON LOUISE</h1>
-            </div>
+
             <p class="hero-services">
               Traiteur événementiel sur mesure • Bar mobile • Jeux de cartes (Poker & Black Jack)
             </p>
@@ -477,124 +475,240 @@
 
     <section class="section contact-section" id="contact">
       <div class="container">
+
         <div class="contact-hero">
-          <h2 class="contact-main-title">
-            VIVEZ UNE EXPÉRIENCE<br>
-            D'EXCEPTION AVEC<br>
-            <span class="gradient-text">LA MAISON LOUISE</span>
-          </h2>
+          <h2 class="section-title">Contactez-nous</h2>
+          <p class="section-subtitle">
+            Transformons ensemble votre vision en réalité.<br>
+            Notre équipe est à votre écoute 7j/7
+          </p>
         </div>
 
         <div class="contact-info-grid">
-          <div class="contact-card neomorph-card">
-            <div class="contact-icon">📍</div>
-            <h3>Adresse</h3>
-            <p><strong>Sicap foire, CICES</strong></p>
-            <p>DAKAR, Sénégal</p>
+
+          <div class="contact-card neomorph-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="contact-card-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3 class="contact-card-title">Notre Adresse</h3>
+            <p class="contact-card-text">
+              <strong>Sicap Foire, CICES</strong><br>
+              Dakar, Sénégal
+            </p>
+            <a href="https://maps.google.com/?q=Sicap+Foire+CICES+Dakar" target="_blank" class="contact-card-link">
+              <i class="fas fa-external-link-alt"></i> Voir sur Google Maps
+            </a>
           </div>
 
-          <div class="contact-card neomorph-card">
-            <div class="contact-icon">📧</div>
-            <h3>Email</h3>
-            <a href="mailto:info@maisonlouise.eu">info@maisonlouise.eu</a>
+          <!-- Carte Email -->
+          <div class="contact-card neomorph-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="contact-card-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <h3 class="contact-card-title">Email</h3>
+            <p class="contact-card-text">
+              Réponse sous 24h garantie
+            </p>
+            <a href="mailto:info@maisonlouise.eu" class="contact-card-link">
+              <i class="fas fa-paper-plane"></i> info@maisonlouise.eu
+            </a>
           </div>
 
-          <div class="contact-card neomorph-card">
-            <div class="contact-icon">📞</div>
-            <h3>Téléphone</h3>
-            <a href="tel:+221762012091">+221 76 201 20 91</a>
-            <a href="tel:+221711252837">+221 77 125 28 37</a>
-            <a href="tel:+33761517406">+33 7 61 51 74 06</a>
+          <!-- Carte Téléphone -->
+          <div class="contact-card neomorph-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="contact-card-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <h3 class="contact-card-title">Téléphone</h3>
+            <p class="contact-card-text">
+              Disponible du lundi au dimanche
+            </p>
+            <div class="contact-phones">
+              <a href="tel:+221762012091" class="contact-card-link">
+                <i class="fas fa-phone"></i> +221 76 201 20 91
+              </a>
+              <a href="tel:+221711252837" class="contact-card-link">
+                <i class="fas fa-phone"></i> +221 77 125 28 37
+              </a>
+              <a href="tel:+33761517406" class="contact-card-link">
+                <i class="fas fa-phone"></i> +33 7 61 51 74 06
+              </a>
+            </div>
           </div>
         </div>
 
-        <div class="contact-form-wrapper">
-          <div class="contact-form neomorph-card">
-            <h3>Demande de Devis</h3>
-            <p class="form-subtitle">Parlez-nous de votre projet, nous vous répondons sous 24h</p>
-
-            <form id="contactForm">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="name">Nom complet *</label>
-                  <input type="text" id="name" name="name" class="neomorph-input" required>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email *</label>
-                  <input type="email" id="email" name="email" class="neomorph-input" required>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="phone">Téléphone *</label>
-                  <input type="tel" id="phone" name="phone" class="neomorph-input" required>
-                </div>
-                <div class="form-group">
-                  <label for="event">Type d'événement *</label>
-                  <select id="event" name="event" class="neomorph-input" required>
-                    <option value="">Choisir...</option>
-                    <option value="mariage">Mariage</option>
-                    <option value="corporate">Corporate / Professionnel</option>
-                    <option value="prive">Privé / Anniversaire</option>
-                    <option value="autre">Autre</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="guests">Nombre d'invités *</label>
-                  <input type="number" id="guests" name="guests" class="neomorph-input" min="1" required>
-                </div>
-                <div class="form-group">
-                  <label for="date">Date souhaitée</label>
-                  <input type="date" id="date" name="date" class="neomorph-input">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="message">Votre message *</label>
-                <textarea id="message" name="message" class="neomorph-input" rows="5" required placeholder="Décrivez-nous votre événement..."></textarea>
-              </div>
-
-              <button type="submit" class="btn-neomorph btn-primary btn-large full-width">
-                <i class="fas fa-paper-plane"></i> Envoyer ma demande
+        <div class="contact-cta" data-aos="zoom-in">
+          <div class="cta-box neomorph-card">
+            <div class="cta-content">
+              <h3 class="cta-title">
+                <span class="gradient-text">Prêt à créer votre événement ?</span>
+              </h3>
+              <p class="cta-subtitle">
+                Obtenez un devis personnalisé gratuit en moins de 2 minutes
+              </p>
+              <button id="openQuoteBtn" class="btn-neomorph btn-primary btn-large">
+                <i class="fas fa-file-invoice"></i> Demander un devis gratuit
               </button>
-            </form>
+            </div>
+            <div class="cta-illustration">
+              <i class="fas fa-champagne-glasses"></i>
+            </div>
           </div>
         </div>
+
       </div>
     </section>
 
+    <div class="quote-modal" id="quoteModal">
+      <div class="quote-modal-overlay"></div>
+      <div class="quote-modal-content">
+
+        <div class="quote-modal-header">
+          <div class="quote-modal-icon">
+            <i class="fas fa-file-contract"></i>
+          </div>
+          <h2 class="quote-modal-title">Demande de Devis</h2>
+          <p class="quote-modal-subtitle">Remplissez le formulaire, nous vous répondons sous 24h</p>
+          <button class="quote-modal-close" id="closeQuoteBtn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <form id="contactForm" class="quote-form">
+          <div class="form-section">
+            <h4 class="form-section-title">
+              <i class="fas fa-user"></i> Vos informations
+            </h4>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Nom complet *</label>
+                <input type="text" id="name" name="name" class="neomorph-input" placeholder="Ex: Fatou Diop" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" class="neomorph-input" placeholder="votremail@exemple.com" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Téléphone *</label>
+                <input type="tel" id="phone" name="phone" class="neomorph-input" placeholder="+221 77 123 45 67" required>
+              </div>
+
+              <div class="form-group">
+                <label for="company">Entreprise (optionnel)</label>
+                <input type="text" id="company" name="company" class="neomorph-input" placeholder="Nom de votre entreprise">
+              </div>
+            </div>
+          </div>
+          <div class="form-section">
+            <h4 class="form-section-title">
+              <i class="fas fa-calendar-alt"></i> Votre événement
+            </h4>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="event">Type d'événement *</label>
+                <select id="event" name="event" class="neomorph-input" required>
+                  <option value="">-- Choisir un type --</option>
+                  <option value="mariage">💍 Mariage</option>
+                  <option value="corporate">💼 Corporate / Professionnel</option>
+                  <option value="anniversaire">🎉 Anniversaire</option>
+                  <option value="bapteme">👶 Baptême</option>
+                  <option value="cocktail">🍸 Cocktail / Réception</option>
+                  <option value="autre">✨ Autre</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="date">Date souhaitée *</label>
+                <input type="date" id="date" name="date" class="neomorph-input" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guests">Nombre d'invités *</label>
+                <input type="number" id="guests" name="guests" class="neomorph-input" min="1" placeholder="Ex: 150" required>
+              </div>
+
+              <div class="form-group">
+                <label for="budget">Budget estimé (optionnel)</label>
+                <select id="budget" name="budget" class="neomorph-input">
+                  <option value="">-- Sélectionner --</option>
+                  <option value="0-500k">0 - 500 000 FCFA</option>
+                  <option value="500k-1m">500 000 - 1 000 000 FCFA</option>
+                  <option value="1m-3m">1 000 000 - 3 000 000 FCFA</option>
+                  <option value="3m+">Plus de 3 000 000 FCFA</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h4 class="form-section-title">
+              <i class="fas fa-concierge-bell"></i> Services souhaités
+            </h4>
+
+            <div class="services-grid">
+              <label class="service-checkbox">
+                <input type="checkbox" name="services[]" value="traiteur">
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">🍽️ Traiteur</span>
+              </label>
+
+              <label class="service-checkbox">
+                <input type="checkbox" name="services[]" value="bar-mobile">
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">🍸 Bar mobile</span>
+              </label>
+
+              <label class="service-checkbox">
+                <input type="checkbox" name="services[]" value="decoration">
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">🎨 Décoration</span>
+              </label>
+
+              <label class="service-checkbox">
+                <input type="checkbox" name="services[]" value="animation">
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">🎤 Animation</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Étape 4: Message -->
+          <div class="form-section">
+            <h4 class="form-section-title">
+              <i class="fas fa-comment-dots"></i> Détails de votre projet
+            </h4>
+
+            <div class="form-group">
+              <label for="message">Votre message *</label>
+              <textarea id="message" name="message" class="neomorph-input" rows="5" placeholder="Décrivez-nous votre événement en quelques lignes..." required></textarea>
+              <span class="char-counter"><span id="charCount">0</span> / 500 caractères</span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-neomorph btn-secondary" id="cancelQuoteBtn">
+              <i class="fas fa-times"></i> Annuler
+            </button>
+            <button type="submit" class="btn-neomorph btn-primary">
+              <i class="fas fa-paper-plane"></i> Envoyer ma demande
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
-            <div class="footer-content neomorph-card">
-                <div class="footer-brand">
-                    <h3>MAISON LOUISE</h3>
-                    <p class="footer-tagline">Une Maison • Une Vision • Une Signature</p>
-                    <p>Traiteur événementiel haut de gamme à Dakar, Sénégal</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Navigation</h4>
-                        <ul>
-                            <li><a href="#accueil">Accueil</a></li>
-                            <li><a href="#services">Services</a></li>
-                            <li><a href="plateaux.html">Plateaux</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Contact</h4>
-                        <ul>
-                            <li><a href="tel:+221776151406">📞 +221 77 615 14 06</a></li>
-                            <li><a href="mailto:contact@maisonlouise.sn">📧 contact@maisonlouise.sn</a></li>
-                            <li><a href="https://www.instagram.com/_maisonlouise/">📱 @_maisonlouise</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 MAISON LOUISE. Fait avec ❤️ à Dakar</p>
             </div>

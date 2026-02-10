@@ -9,38 +9,8 @@
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
-  <style>
-    .notification{position:fixed;top:100px;right:-400px;background:var(--bg);padding:1.5rem 2rem;border-radius:1rem;box-shadow:0 10px 40px rgba(0,0,0,0.3);z-index:10000;max-width:400px;font-family:'Poppins',sans-serif;transition:right 0.4s cubic-bezier(0.68,-0.55,0.265,1.55);display:flex;align-items:flex-start;gap:1rem}.notification.show{right:2rem}.notification.error{border-left:4px solid #e74c3c}.notification.warning{border-left:4px solid #f39c12}.notification.success{border-left:4px solid #27ae60}.notification.info{border-left:4px solid #3498db}.notification-icon{font-size:1.5rem;flex-shrink:0}.notification.error .notification-icon{color:#e74c3c}.notification.warning .notification-icon{color:#f39c12}.notification.success .notification-icon{color:#27ae60}.notification.info .notification-icon{color:#3498db}.notification-content{flex:1}.notification-title{font-weight:700;font-size:1.1rem;margin-bottom:0.5rem;color:var(--navy)}.notification-message{font-size:0.95rem;color:var(--text-light);line-height:1.5}.notification-close{background:none;border:none;font-size:1.5rem;color:var(--text-light);cursor:pointer;padding:0;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.3s;flex-shrink:0}.notification-close:hover{background:rgba(0,0,0,0.1);transform:rotate(90deg)}
-    .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}.modal-overlay.show{display:flex;animation:fadeIn 0.3s}.modal-box{background:var(--bg);padding:3rem;border-radius:2rem;box-shadow:0 20px 60px rgba(0,0,0,0.4);max-width:500px;width:90%;animation:slideUp 0.4s}.modal-header{text-align:center;margin-bottom:2rem}.modal-icon{font-size:3rem;margin-bottom:1rem}.modal-icon.warning{color:#f39c12}.modal-icon.error{color:#e74c3c}.modal-icon.success{color:#27ae60}.modal-title{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--navy);margin-bottom:0.5rem}.modal-message{font-size:1.05rem;color:var(--text-light);line-height:1.7;margin-bottom:2rem;white-space:pre-line}.modal-actions{display:flex;gap:1rem;justify-content:center}.modal-btn{padding:1rem 2rem;border:none;border-radius:1rem;font-family:'Poppins',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;transition:all 0.3s;min-width:120px}.modal-btn-cancel{background:var(--bg);box-shadow:var(--shadow);color:var(--navy)}.modal-btn-cancel:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}.modal-btn-confirm{background:var(--gradient);color:var(--navy);box-shadow:0 5px 20px rgba(212,175,55,0.4)}.modal-btn-confirm:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(212,175,55,0.6)}
+  <link rel ="stylesheet" href="css/plateau-detail.css">
 
-    @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
-    @keyframes slideUp{0%{opacity:0;transform:translateY(50px)}100%{opacity:1;transform:translateY(0)}}
-        .detail-hero{padding-top:120px;padding-bottom:4rem}.plateau-detail-image{position:relative;border-radius:2rem;overflow:hidden;box-shadow:var(--shadow);margin-bottom:2rem}.plateau-detail-image img{width:100%;height:400px;object-fit:cover}.detail-actions{display:flex;gap:1rem;margin-bottom:2rem}.like-btn{display:flex;align-items:center;gap:0.75rem;padding:1rem 2rem;background:var(--bg);border-radius:3rem;box-shadow:var(--shadow);border:none;cursor:pointer;font-size:1.1rem;font-weight:600;transition:.3s;font-family:'Poppins',sans-serif;flex:1;justify-content:center}.like-btn:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}.like-btn.liked{background:var(--gradient);color:var(--navy)}.like-btn.liked i{animation:heartBeat 0.5s}.detail-title{font-size:2.5rem;margin-bottom:1rem;font-family:'Playfair Display',serif;text-align:center}.detail-description{font-size:1.125rem;color:var(--text-light);margin-bottom:2rem;line-height:1.7;text-align:center;max-width:800px;margin-left:auto;margin-right:auto}
-
-        .content-wrapper{display:grid;grid-template-columns:400px 1fr;gap:2rem;max-width:1400px;margin:0 auto}
-        .days-column{position:sticky;top:120px;height:fit-content}.days-selector{display:flex;flex-direction:column;gap:0.75rem}.day-btn{padding:1.25rem 1.5rem;background:var(--bg);border:2px solid transparent;border-radius:1rem;box-shadow:var(--shadow);cursor:pointer;font-weight:700;font-size:1.05rem;transition:all 0.3s;text-align:left;font-family:'Poppins',sans-serif;color:var(--navy);position:relative}.day-btn:hover{box-shadow:var(--shadow-hover);transform:translateX(8px)}.day-btn.active{background:var(--gradient);color:var(--navy);border-color:var(--gold);transform:translateX(12px);box-shadow:0 8px 25px rgba(212,175,55,0.4)}.day-btn.active::after{content:'→';position:absolute;right:1.5rem;font-size:1.5rem;animation:arrowBounce 1s infinite}
-        .day-btn.disabled{opacity:0.4;cursor:not-allowed;background:rgba(0,0,0,0.05)}.day-btn.disabled:hover{transform:none;box-shadow:var(--shadow)}
-
-        .details-column{min-height:600px}
-        .menu-card{background:var(--bg);padding:2.5rem;border-radius:2rem;box-shadow:0 10px 40px rgba(0,0,0,0.15);display:none;animation:slideInRight 0.5s ease-out}.menu-card.active{display:block}
-        .menu-card-header{text-align:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:3px solid var(--gold)}.menu-card-header h2{font-family:'Playfair Display',serif;font-size:2rem;color:var(--navy);margin-bottom:0.5rem}.menu-card-date{color:var(--text-light);font-weight:600}
-        .menu-section{margin-bottom:2rem;padding:1.5rem;background:rgba(212,175,55,0.05);border-radius:1.5rem;border-left:4px solid var(--gold)}.menu-section h4{font-size:1.3rem;color:var(--navy);margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;font-family:'Playfair Display',serif}.menu-section h4 i{color:var(--gold);font-size:1.5rem}.menu-item-name{font-weight:700;font-size:1.1rem;margin-bottom:0.5rem;color:var(--navy)}.menu-item-desc{font-size:0.95rem;color:var(--text-light);line-height:1.6}
-        .allergens-section{margin-top:2rem;padding:1.5rem;background:rgba(231,76,60,0.1);border-left:4px solid #e74c3c;border-radius:1rem}.allergens-title{font-size:1.05rem;font-weight:700;color:#e74c3c;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem}.allergens-list{font-size:0.9rem;color:var(--text)}
-        .order-section{margin-top:2rem;background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);padding:2.5rem;border-radius:2rem;box-shadow:0 10px 30px rgba(0,0,0,0.15)}.order-header{text-align:center;margin-bottom:2rem}.order-header h3{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--navy);margin-bottom:0.5rem}
-        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}.form-group{display:flex;flex-direction:column}.form-label{font-weight:700;margin-bottom:0.75rem;color:var(--navy);font-size:1rem}.quantity-selector{display:flex;align-items:center;justify-content:center;gap:1rem;padding:0.5rem}.quantity-btn{width:50px;height:50px;background:var(--bg);border:none;border-radius:50%;box-shadow:var(--shadow);cursor:pointer;font-size:1.5rem;font-weight:700;transition:all 0.3s;color:var(--navy)}.quantity-btn:hover{box-shadow:var(--shadow-hover);transform:scale(1.1)}.quantity-display{font-size:2rem;font-weight:800;min-width:60px;text-align:center;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.date-input{padding:1rem;background:var(--bg);border:2px solid transparent;border-radius:1rem;box-shadow:var(--shadow);font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;color:var(--navy);transition:all 0.3s}.date-input:focus{outline:none;border-color:var(--gold);box-shadow:var(--shadow-hover)}
-        .price-summary{text-align:center;padding:1.5rem;background:rgba(255,255,255,0.6);border-radius:1rem;margin-bottom:1.5rem}.price-label{font-size:1.1rem;color:var(--text-light);margin-bottom:0.5rem}.price-total{font-size:2.5rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
-        .weekend-message{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:3rem;border-radius:2rem;box-shadow:0 10px 40px rgba(0,0,0,0.2);text-align:center;color:white;display:none}.weekend-message.active{display:block;animation:slideInRight 0.5s ease-out}.weekend-message i{font-size:4rem;margin-bottom:1.5rem;opacity:0.9}.weekend-message h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem}.weekend-message p{font-size:1.1rem;line-height:1.7;margin-bottom:1.5rem}.weekend-contact{display:inline-flex;align-items:center;gap:0.75rem;padding:1rem 2rem;background:rgba(255,255,255,0.2);border-radius:3rem;font-weight:700;margin-top:1rem;transition:all 0.3s}.weekend-contact:hover{background:rgba(255,255,255,0.3);transform:translateY(-2px)}
-
-        .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:500px;text-align:center;color:var(--text-light)}.empty-state i{font-size:5rem;margin-bottom:1.5rem;opacity:0.3}.empty-state h3{font-size:1.5rem;margin-bottom:1rem;font-family:'Playfair Display',serif}.empty-state p{font-size:1.1rem}
-
-        @keyframes slideInRight{0%{opacity:0;transform:translateX(50px)}100%{opacity:1;transform:translateX(0)}}
-        @keyframes arrowBounce{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
-        @keyframes heartBeat{0%,100%{transform:scale(1)}25%{transform:scale(1.3)}50%{transform:scale(1.1)}}
-
-        @media (max-width:1200px){.content-wrapper{grid-template-columns:1fr;gap:2rem}.days-column{position:static}.days-selector{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem}.day-btn{text-align:center}.day-btn.active::after{display:none}}
-        @media (max-width:768px){.detail-title{font-size:1.75rem}.detail-description{font-size:1rem}.days-selector{grid-template-columns:repeat(2,1fr)}.form-row{grid-template-columns:1fr}.plateau-detail-image img{height:300px}.detail-actions{flex-direction:column}.like-btn{padding:1rem}}
-  </style>
 </head>
 <body>
 <nav class="navbar">
@@ -370,7 +340,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script src="js/app.js"></script>
 <script>
-  // ✅ ===== CONFIGURATION EMAILJS (TES VRAIS IDS) =====
+
   const EMAILJS_CONFIG = {
     PUBLIC_KEY: 'CVThEmhHV2jGIBTFF',
     SERVICE_ID: 'service_9wa3jyy',
@@ -381,12 +351,9 @@
   if (typeof emailjs !== 'undefined') {
     try {
       emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-      console.log('✅ EmailJS initialisé avec succès');
     } catch (error) {
-      console.error('❌ Erreur initialisation EmailJS:', error);
+
     }
-  } else {
-    console.error('❌ EmailJS SDK non chargé !');
   }
 });
 
