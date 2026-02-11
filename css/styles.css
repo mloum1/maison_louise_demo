@@ -2164,8 +2164,16 @@ a {
   .about-content .lead, .about-content .subtitle {
     font-size : 0.6rem;
   }
+
   .about-text p  {
     font-size : 0.4rem;
+  }
+  .two-columns img {
+    object-fit: content;
+  }
+
+  .two-columns .quote-box {
+
   }
  }
 
