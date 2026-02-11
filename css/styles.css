@@ -2166,17 +2166,25 @@ a {
   }
 
   .about-text p, .about-text .highlight {
-    font-size : 0.65rem;
+    font-size : 0.7rem;
   }
-  .two-columns img {
-    object-fit: content;
-  }
+ .two-columns img {
+     width: 100%;
+     max-width: 100%;
+     height: auto;
+     min-height: 250px;
+     object-fit: cover;
+     object-position: center;
+     border-radius: 1rem;
+   }
 
   .two-columns .quote-box {
-
-  }
-  .two-columns .entrepreneur-details {
-    margin-top: -2rem;
+      width: 380px;
+      margin-left: -150px;
+      margin-top : 10rem !important;
+      padding: 1.5rem;
+      box-sizing: border-box;
+      order: 2;
   }
  }
 
