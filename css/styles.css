@@ -2179,12 +2179,15 @@ a {
    }
 
   .two-columns .quote-box {
-      width: 380px;
-      margin-left: -150px;
-      margin-top : 10rem !important;
-      padding: 1.5rem;
+      padding: 0.5rem;
       box-sizing: border-box;
-      order: 2;
+      margin-top: -1rem;
+  }
+  .about-text .inspired {
+    margin-top : -1.5rem;
+  }
+  .two-columns .entrepreneur-details {
+    margin-top : -1.8rem;
   }
  }
 
